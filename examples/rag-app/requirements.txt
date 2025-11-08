@@ -2,7 +2,7 @@
 # Python 3.9+
 
 # Core LLM Framework
-langchain==0.1.9
+langchain==0.2.5
 langchain-community==0.0.20
 langchain-anthropic==0.1.4
 langchain-openai==0.0.6
