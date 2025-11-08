@@ -58,6 +58,19 @@ Unified API to access multiple LLM providers through a single interface.
 
 ---
 
+### 🌟 [Google Gemini](./google-gemini/)
+**Multimodal LLM Platform** | 4.2MB
+
+Google's flagship multimodal AI platform with native support for text, images, video, and audio, plus enterprise integration and on-device deployment.
+
+- **Models**: Gemini 2.5 Pro, Flash, Flash-Lite (1M context), Veo (video), Embeddings
+- **Key Features**: Multimodal processing, extended context (1M tokens), reasoning mode, search integration
+- **Best For**: Multimodal analysis, enterprise applications, cost-optimized deployments
+
+📄 [Full Documentation](./google-gemini/llms-full.txt) | [Quick Start](./google-gemini/)
+
+---
+
 ### 🤝 [Together.ai](./together-ai/)
 **Open-Source LLM Platform** | 1.3MB
 
@@ -78,6 +91,7 @@ Platform focused on open-source and custom model deployment.
 | **Anthropic** | Reasoning & safety | 200K | Complex tasks, long docs |
 | **Cohere** | Enterprise RAG | 128K | Search, retrieval |
 | **Fireworks** | Speed & cost | Varies | Production, cost-sensitive |
+| **Google Gemini** | Multimodal, pricing tiers | 1M | Image/video analysis, enterprise |
 | **OpenRouter** | Model variety | Varies | Multi-model access |
 | **Together.ai** | Open-source | Varies | Custom models, research |
 
@@ -90,6 +104,7 @@ Platform focused on open-source and custom model deployment.
 # Use Claude Code with different providers
 claude --model anthropic/claude-3-5-sonnet
 claude --model openrouter/anthropic/claude-3.5-sonnet
+claude --model google/gemini-2.5-flash
 ```
 
 See: [Claude Code Model Config](../claude-code/configuration/model-config.md)
@@ -107,18 +122,26 @@ See: [Claude Code Model Config](../claude-code/configuration/model-config.md)
 
 **For production applications:**
 1. Start with [Anthropic](./anthropic/) for quality
-2. Add [OpenRouter](./openrouter/) for flexibility
-3. Consider [Fireworks](./fireworks/) for cost optimization
+2. Add [Google Gemini](./google-gemini/) for multimodal tasks
+3. Consider [OpenRouter](./openrouter/) for flexibility
+4. Use [Fireworks](./fireworks/) for cost optimization
 
 **For enterprise:**
-1. [Anthropic](./anthropic/) for critical tasks
-2. [Cohere](./cohere/) for RAG/search
-3. Deploy via [AWS Bedrock](../claude-code/deployment/amazon-bedrock.md) or [GCP Vertex](../claude-code/deployment/google-vertex-ai.md)
+1. [Anthropic](./anthropic/) for critical text reasoning tasks
+2. [Google Gemini](./google-gemini/) for multimodal + enterprise integration
+3. [Cohere](./cohere/) for RAG/search
+4. Deploy via [AWS Bedrock](../claude-code/deployment/amazon-bedrock.md) or [GCP Vertex](../claude-code/deployment/google-vertex-ai.md)
+
+**For multimodal applications:**
+1. [Google Gemini](./google-gemini/) for text, images, video, audio
+2. [OpenRouter](./openrouter/) for model comparison and fallback
+3. [Anthropic](./anthropic/) as secondary option
 
 **For research/experimentation:**
 1. [Together.ai](./together-ai/) for open-source models
 2. [OpenRouter](./openrouter/) for quick comparisons
-3. Fine-tune on [Together.ai](./together-ai/)
+3. [Google Gemini](./google-gemini/) for multimodal research
+4. Fine-tune on [Together.ai](./together-ai/)
 
 ---
 

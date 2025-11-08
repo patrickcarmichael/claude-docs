@@ -70,6 +70,29 @@ Framework for orchestrating role-based AI agents working together.
 
 ---
 
+### 🦙 [LlamaIndex](./llamaindex/)
+**LLM Data Framework for RAG** | 1.2MB
+
+Leading framework for building LLM-powered agents over your data with intelligent indexing and retrieval.
+
+- **Focus**: Data indexing, retrieval-augmented generation (RAG), document QA
+- **Language**: Python (also TypeScript)
+- **Best For**: Document Q&A, RAG applications, data-driven agents
+- **Specialization**: 50+ LLM providers, 200+ data connectors
+
+📄 [Full Documentation](./llamaindex/llms-full.txt)
+
+**Key Features:**
+- 50+ LLM provider support (OpenAI, Claude, Gemini, local models)
+- 200+ data connectors (APIs, databases, PDFs, cloud storage)
+- Advanced retrieval strategies (vector, keyword, hybrid, recursive)
+- Agent framework for autonomous task execution
+- LlamaCloud for managed document processing
+
+**Comparison**: More specialized for RAG than [LangChain](./langchain/), simpler than [LangGraph](./langgraph/)
+
+---
+
 ### 🔌 [MCP](./mcp/)
 **Model Context Protocol** | 852KB
 
@@ -92,6 +115,28 @@ Protocol for connecting AI models to external data sources and tools.
 
 ---
 
+### 🔍 [Haystack](./haystack/)
+**Production-Ready LLM Orchestration** | 368KB
+
+End-to-end framework for building production-ready applications powered by LLMs with emphasis on retrieval-augmented generation and document intelligence.
+
+- **Focus**: RAG pipelines, document retrieval, semantic search
+- **Language**: Python
+- **Best For**: Enterprise document search, scaled information retrieval
+- **Philosophy**: Vendor-neutral, component-based architecture
+
+📄 [Full Documentation](./haystack/llms-full.txt)
+
+**Key Features:**
+- Retrieval-augmented generation (RAG) pipelines
+- Advanced retrieval strategies (dense, sparse, hybrid)
+- Multi-vendor LLM support
+- Production-grade stability and monitoring
+
+**Related**: [LangChain](./langchain/) for broader orchestration, [LlamaIndex](./llamaindex/) for pure indexing
+
+---
+
 ## Framework Comparison
 
 | Framework | Focus | Complexity | Best For |
@@ -99,6 +144,8 @@ Protocol for connecting AI models to external data sources and tools.
 | **LangChain** | General LLM apps | Medium | RAG, chatbots, data analysis |
 | **LangGraph** | Agent workflows | High | Complex multi-step agents |
 | **CrewAI** | Multi-agent teams | Medium | Role-based collaboration |
+| **LlamaIndex** | Data indexing & RAG | Easy-Medium | Document QA, data-driven agents |
+| **Haystack** | RAG & retrieval | Medium | Enterprise document search |
 | **MCP** | Context integration | Low | Connecting data sources |
 
 ---
@@ -144,6 +191,44 @@ from crewai import Agent, Task, Crew
 
 ---
 
+### For Document Q&A and Data Indexing
+**Use**: [LlamaIndex](./llamaindex/)
+
+```python
+# Example: Index documents and ask questions
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+
+documents = SimpleDirectoryReader("./data").load_data()
+index = VectorStoreIndex.from_documents(documents)
+query_engine = index.as_query_engine()
+response = query_engine.query("What are the main topics?")
+```
+
+**Best For**:
+- Document question answering
+- Building intelligent data indices
+- RAG applications with complex data sources
+- Leveraging 50+ LLM providers
+
+**Works with**: Claude, GPT-4, Gemini, Mistral, local models
+
+---
+
+### For Production RAG at Scale
+**Use**: [Haystack](./haystack/)
+
+```python
+# Example: Enterprise document search
+from haystack import Pipeline
+from haystack.components.retrievers import DensePassageRetriever
+from haystack.components.generators import OpenAIGenerator
+# Build retrieval pipelines with vector databases
+```
+
+**Works with**: Vector databases (Pinecone, Weaviate, Qdrant)
+
+---
+
 ### For External Integration
 **Use**: [MCP](./mcp/)
 
@@ -185,6 +270,16 @@ CrewAI Crew → Agent A (GPT-4) + Agent B (Claude) → Coordinated Output
 **See**:
 - [CrewAI Docs](./crewai/llms-full.txt)
 - [AI Platforms](../ai-platforms/)
+
+### LlamaIndex + Vector Database
+```
+Documents → LlamaIndex Indexing → Pinecone/Weaviate → Query Results
+```
+
+**See**:
+- [LlamaIndex Docs](./llamaindex/llms-full.txt)
+- [Pinecone](../infrastructure/pinecone/) - Vector database
+- [Anthropic Claude](../ai-platforms/anthropic/) - High-quality LLM backend
 
 ---
 

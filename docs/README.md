@@ -27,6 +27,7 @@ LLM APIs and AI service platforms.
 | **[Anthropic](./ai-platforms/anthropic/)** | Claude API & SDKs | 4.3M |
 | **[Cohere](./ai-platforms/cohere/)** | Enterprise LLM platform | 2.7M |
 | **[Fireworks](./ai-platforms/fireworks/)** | Fast LLM inference | 991K |
+| **[Google Gemini](./ai-platforms/google-gemini/)** | Multimodal LLM platform | 4.2M |
 | **[OpenRouter](./ai-platforms/openrouter/)** | Multi-model routing | 839K |
 | **[Together.ai](./ai-platforms/together-ai/)** | Open-source LLMs | 1.3M |
 
@@ -53,6 +54,8 @@ Frameworks and protocols for building AI applications.
 | **[LangChain](./ai-frameworks/langchain/)** | LLM application framework | 346K |
 | **[LangGraph](./ai-frameworks/langgraph/)** | Agent workflow framework | 618K |
 | **[CrewAI](./ai-frameworks/crewai/)** | Multi-agent orchestration | 1.9M |
+| **[LlamaIndex](./ai-frameworks/llamaindex/)** | Data indexing & RAG | 11K |
+| **[Haystack](./ai-frameworks/haystack/)** | Production RAG pipelines | 13.4K |
 | **[MCP](./ai-frameworks/mcp/)** | Model Context Protocol | 852K |
 
 **Related**: [Claude Code MCP Integration](./claude-code/features/mcp.md)
@@ -77,7 +80,10 @@ Developer tools, databases, and platform services.
 | Service | Category | Size |
 |---------|----------|------|
 | **[Supabase](./infrastructure/supabase/)** | Backend/Database | 4.0M |
-| **[Pinecone](./infrastructure/pinecone/)** | Vector database | 2.8M |
+| **[Pinecone](./infrastructure/pinecone/)** | Vector database (managed) | 2.8M |
+| **[Weaviate](./infrastructure/weaviate/)** | Vector database (hybrid search) | 12K |
+| **[Qdrant](./infrastructure/qdrant/)** | Vector database (Rust-based) | 1.7K |
+| **[Chroma](./infrastructure/chroma/)** | Vector database (lightweight) | 15.3K |
 | **[ElevenLabs](./infrastructure/elevenlabs/)** | Voice AI | 5.5M |
 | **[Cloudflare](./infrastructure/cloudflare/)** | Edge computing | 24K |
 | **[Mintlify](./infrastructure/mintlify/)** | Documentation platform | 781K |
@@ -113,10 +119,10 @@ Developer tools, databases, and platform services.
 
 ## 📊 Collection Stats
 
-- **Total Documentation**: 69 files (2 new platforms added)
-- **Total Size**: ~60MB (increased from 52MB)
-- **Platforms Covered**: 23 (added Streamlit, Supabase)
-- **Categories**: 6
+- **Total Documentation**: 81 files (6 critical platforms added)
+- **Total Size**: ~65MB (major expansion with vector databases)
+- **Platforms Covered**: 29 (+6 new: LlamaIndex, Haystack, Weaviate, Qdrant, Gemini, Chroma)
+- **Categories**: 6 (vector databases integrated into infrastructure)
 
 ---
 

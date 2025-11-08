@@ -48,6 +48,95 @@ Fully managed vector database for AI applications and semantic search.
 
 ---
 
+### 🧠 [Chroma](./chroma/)
+**Open-Source Vector Database** | 4.2MB
+
+Lightweight, developer-friendly vector database for prototyping and building AI applications locally.
+
+- **Type**: Vector database (open-source)
+- **Deployment**: Local (in-memory/SQLite), Docker, Cloud
+- **Best For**: Prototyping, development, RAG systems
+- **Features**: Simple API, in-memory + persistent modes, metadata filtering
+
+📄 [Full Documentation](./chroma/llms-full.txt)
+
+**Key Benefits:**
+- No vendor lock-in - fully open-source
+- Fast local development with SQLite
+- Works seamlessly with LangChain
+- Configurable embedding models
+- HNSW indexing for fast similarity search
+
+**AI Use Cases:**
+- Rapid prototyping of RAG applications
+- Local semantic search
+- Embedding-based retrieval
+- Development/testing environments
+- Knowledge base Q&A systems
+
+**Use with**: [LangChain](../ai-frameworks/langchain/), [Anthropic](../ai-platforms/anthropic/)
+
+---
+
+### ⚡ [Qdrant](./qdrant/)
+**Open-Source Vector Database** | 3.2KB
+
+Rust-based, high-performance vector database with hybrid search capabilities.
+
+- **Type**: Vector database (managed cloud, hybrid, self-hosted)
+- **Built in**: Rust for high performance
+- **Features**: Hybrid search, RAG, payload filtering, HNSW indexing
+- **Deployment**: Cloud SaaS, Kubernetes hybrid, Docker self-hosted
+
+📄 [Full Documentation](./qdrant/llms-full.txt)
+
+**AI Use Cases:**
+- Semantic search with hybrid dense + sparse vectors
+- RAG applications with advanced filtering
+- Multivector representations (ColBERT, late interaction)
+- Enterprise deployments with data sovereignty
+
+**Key Advantages:**
+- Open-source with flexible deployment options
+- Superior filtering capabilities for RAG
+- Built-in FastEmbed for local embeddings
+- Data sovereignty options (no vendor lock-in)
+
+**Use with**: [LangChain](../ai-frameworks/langchain/), [LlamaIndex](../ai-frameworks/llamaindex/)
+
+---
+
+### 🔍 [Weaviate](./weaviate/)
+**AI-Native Vector Database with Hybrid Search** | 24KB
+
+Open-source vector database with GraphQL API, hybrid search, knowledge graph, and modularity.
+
+- **Type**: Vector database (self-hosted or managed cloud)
+- **API**: GraphQL (primary) and REST
+- **Features**: Hybrid search, multi-tenancy, pluggable vectorizers, advanced filtering
+- **Deployment**: Weaviate Cloud, Docker, Kubernetes, Embedded Python/JS
+- **Scale**: Billions of vectors
+
+📄 [Full Documentation](./weaviate/llms-full.txt) | 📖 [README](./weaviate/)
+
+**AI Use Cases:**
+- RAG systems with semantic context retrieval
+- Hybrid search combining vector + keyword matching
+- Knowledge graphs with semantic understanding
+- Long-term memory for intelligent agents
+- Zero-shot classification and clustering
+
+**Key Advantages:**
+- GraphQL API for intuitive, flexible queries
+- Hybrid search (semantic + keyword BM25)
+- Self-hosted option with no vendor lock-in
+- Built-in multi-tenancy for multi-customer applications
+- Pluggable vectorizers: OpenAI, Cohere, HuggingFace, local models
+
+**Use with**: [LangChain](../ai-frameworks/langchain/), [LlamaIndex](../ai-frameworks/llamaindex/), [Anthropic](../ai-platforms/anthropic/)
+
+---
+
 ### 🔊 [ElevenLabs](./elevenlabs/)
 **Voice AI Platform** | 5.5MB
 
@@ -139,7 +228,10 @@ Collaborative documentation platform for teams.
 | Service | Category | Pricing | Best For |
 |---------|----------|---------|----------|
 | **Supabase** | Backend/Database | Free + pay-per-use | Full-stack, RAG, vectors |
-| **Pinecone** | Vector DB | Pay-per-use | Pure vector search |
+| **Pinecone** | Vector DB | Pay-per-use | Pure vector search, simplicity |
+| **Chroma** | Vector DB | Free (open-source) | Development, prototyping |
+| **Qdrant** | Vector DB | Open-source + cloud | Flexibility, filtering, sovereignty |
+| **Weaviate** | Vector DB | Open-source + cloud | Hybrid search, GraphQL, knowledge graphs |
 | **ElevenLabs** | Voice AI | Subscription | Voice interfaces |
 | **Cloudflare** | Edge platform | Free + paid tiers | Global distribution |
 | **Mintlify** | Docs platform | Free + enterprise | Product docs |
@@ -292,12 +384,36 @@ export default {
 ## Choosing Services
 
 ### For Vector Search/RAG
-**Primary**: [Pinecone](./pinecone/)
-- Managed, scalable
-- Production-ready
-- Easy LangChain integration
+**Primary Options:**
 
-**Alternative**: Cloudflare Vectorize (edge vector DB)
+[Pinecone](./pinecone/) - Cloud-native simplicity
+- Fully managed infrastructure
+- Pay-per-use pricing
+- Production-ready at scale
+- Best if: Want zero maintenance
+
+[Chroma](./chroma/) - Fast development & prototyping
+- Lightweight, open-source
+- Local development with SQLite
+- No vendor lock-in
+- Best if: Building MVPs or rapid prototyping
+
+[Weaviate](./weaviate/) - Hybrid search & knowledge graphs
+- Self-hosted or managed cloud
+- GraphQL API for flexible queries
+- Hybrid search (semantic + keyword)
+- Multi-tenancy and modular vectorizers
+- Best if: Need hybrid search, knowledge graphs, or GraphQL API
+
+[Qdrant](./qdrant/) - Open-source flexibility
+- Self-hosted, hybrid, or managed cloud
+- Superior filtering for RAG
+- Better data control/sovereignty
+- Best if: Need customization or compliance control
+
+**Alternatives:**
+- Cloudflare Vectorize (edge vector DB)
+- Supabase pgvector (for smaller datasets with relational data)
 
 ---
 

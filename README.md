@@ -29,10 +29,11 @@ Documentation for major LLM API platforms.
 | [Anthropic](./docs/ai-platforms/anthropic/) | 4.3M | Claude API & SDKs |
 | [Cohere](./docs/ai-platforms/cohere/) | 2.7M | Enterprise LLM platform |
 | [Fireworks](./docs/ai-platforms/fireworks/) | 991K | Fast LLM inference |
+| [Google Gemini](./docs/ai-platforms/google-gemini/) | 4.2M | Multimodal LLM platform |
 | [OpenRouter](./docs/ai-platforms/openrouter/) | 839K | Multi-model routing |
 | [Together.ai](./docs/ai-platforms/together-ai/) | 1.3M | Open-source LLM platform |
 
-**Total:** 5 platforms, ~10.1MB
+**Total:** 6 platforms, ~14.3MB
 
 ---
 
@@ -57,9 +58,11 @@ Frameworks and protocols for LLM applications.
 | [LangChain](./docs/ai-frameworks/langchain/) | 346K | LLM application framework |
 | [LangGraph](./docs/ai-frameworks/langgraph/) | 618K | Agent workflows |
 | [CrewAI](./docs/ai-frameworks/crewai/) | 1.9M | Multi-agent orchestration |
+| [LlamaIndex](./docs/ai-frameworks/llamaindex/) | 11K | Data indexing & RAG |
+| [Haystack](./docs/ai-frameworks/haystack/) | 13.4K | Production RAG pipelines |
 | [MCP](./docs/ai-frameworks/mcp/) | 852K | Model Context Protocol |
 
-**Total:** 4 frameworks, ~3.7MB
+**Total:** 6 frameworks, ~3.7MB
 
 ---
 
@@ -81,13 +84,17 @@ Developer tools, databases, and platform services.
 
 | Service | Size | Category |
 |---------|------|----------|
-| [Pinecone](./docs/infrastructure/pinecone/) | 2.8M | Vector database |
+| [Supabase](./docs/infrastructure/supabase/) | 4.0M | Backend/Database |
+| [Pinecone](./docs/infrastructure/pinecone/) | 2.8M | Vector database (managed) |
+| [Weaviate](./docs/infrastructure/weaviate/) | 12K | Vector database (hybrid search) |
+| [Qdrant](./docs/infrastructure/qdrant/) | 1.7K | Vector database (Rust-based) |
+| [Chroma](./docs/infrastructure/chroma/) | 15.3K | Vector database (lightweight) |
 | [ElevenLabs](./docs/infrastructure/elevenlabs/) | 5.5M | Voice AI |
 | [Cloudflare](./docs/infrastructure/cloudflare/) | 24K | Edge computing |
 | [Mintlify](./docs/infrastructure/mintlify/) | 781K | Documentation platform |
 | [GitBook](./docs/infrastructure/gitbook/) | 422K | Documentation platform |
 
-**Total:** 5 services, ~9.5MB
+**Total:** 9 services, ~13.6MB
 
 ---
 
@@ -133,9 +140,9 @@ All `llms-full.txt` files are optimized for:
 
 ## 📊 Collection Stats
 
-- **Total Files**: 67 documentation files
-- **Total Size**: ~52MB of AI-optimized documentation
-- **Platforms**: 21 major AI/dev platforms
+- **Total Files**: 81 documentation files (6 critical platforms added)
+- **Total Size**: ~65MB of AI-optimized documentation (major expansion with vector databases)
+- **Platforms**: 29 major AI/dev platforms (+8 new: LlamaIndex, Haystack, Weaviate, Qdrant, Gemini, Chroma, Supabase)
 - **Categories**: 6 organized categories
 - **Format**: Markdown + llms-full.txt (plain text)
 
@@ -292,7 +299,7 @@ This repository contains a curated, organized collection of AI development docum
 
 **Created**: 2025-11-08
 **Last Updated**: 2025-11-08
-**Total Documentation**: 67 files (~52MB)
+**Total Documentation**: 81 files (~65MB)
 
 ---
 
