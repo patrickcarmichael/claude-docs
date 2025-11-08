@@ -1,0 +1,475 @@
+name: Validate Documentation
+
+on:
+  pull_request:
+    paths:
+      - '**.md'
+      - '**.txt'
+      - '.github/workflows/validate.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - '**.md'
+      - '**.txt'
+
+jobs:
+  markdown-validation:
+    name: Validate Markdown Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install markdown validator
+        run: |
+          pip install -q \
+            markdown \
+            frontmatter \
+            pyyaml
+
+      - name: Validate markdown files
+        run: |
+          cat > /tmp/validate_markdown.py << 'EOF'
+          import os
+          import sys
+          from pathlib import Path
+          import re
+          import frontmatter
+
+          DOCS_DIR = Path("docs")
+          ERRORS = []
+          WARNINGS = []
+
+          def validate_markdown(filepath):
+              """Validate a markdown file for common issues"""
+              try:
+                  with open(filepath, 'r', encoding='utf-8') as f:
+                      content = f.read()
+
+                  # Try to parse frontmatter
+                  try:
+                      post = frontmatter.loads(content)
+                  except Exception as e:
+                      pass
+
+                  # Check for common markdown issues
+                  lines = content.split('\n')
+
+                  for idx, line in enumerate(lines, 1):
+                      # Check for unclosed code blocks
+                      if line.strip().startswith('```'):
+                          continue
+
+                      # Check for broken markdown syntax
+                      if re.search(r'\[\s*\]', line):
+                          WARNINGS.append(f"{filepath}:{idx}: Empty link text: {line.strip()}")
+
+                      # Check for unmatched brackets
+                      if line.count('[') != line.count(']'):
+                          if not line.strip().startswith('#'):
+                              WARNINGS.append(f"{filepath}:{idx}: Unmatched brackets: {line.strip()}")
+
+                      # Check for broken image syntax
+                      if re.search(r'!\[.*?\]\(\s*\)', line):
+                          ERRORS.append(f"{filepath}:{idx}: Empty image path: {line.strip()}")
+
+                  # Check for required elements in root READMEs
+                  if 'README.md' in str(filepath) and filepath.parent != Path("."):
+                      if '# ' not in content:
+                          ERRORS.append(f"{filepath}: Missing main heading (#)")
+                      if 'README.md' in str(filepath) and DOCS_DIR in filepath.parents:
+                          # Category READMEs should have some structure
+                          if content.count('\n') < 10:
+                              WARNINGS.append(f"{filepath}: Very short README (< 10 lines)")
+
+              except UnicodeDecodeError:
+                  ERRORS.append(f"{filepath}: File encoding error (not valid UTF-8)")
+              except Exception as e:
+                  ERRORS.append(f"{filepath}: {str(e)}")
+
+          # Validate all markdown files
+          print("Validating markdown files...")
+          for md_file in DOCS_DIR.rglob("*.md"):
+              validate_markdown(md_file)
+
+          # Print results
+          print(f"\n{'='*70}")
+          print("MARKDOWN VALIDATION RESULTS")
+          print('='*70)
+
+          if ERRORS:
+              print(f"\n❌ ERRORS ({len(ERRORS)}):")
+              for error in ERRORS:
+                  print(f"  - {error}")
+
+          if WARNINGS:
+              print(f"\n⚠️  WARNINGS ({len(WARNINGS)}):")
+              for warning in WARNINGS[:10]:  # Show first 10
+                  print(f"  - {warning}")
+              if len(WARNINGS) > 10:
+                  print(f"  ... and {len(WARNINGS) - 10} more")
+
+          if not ERRORS and not WARNINGS:
+              print("\n✅ All markdown files are valid!")
+
+          sys.exit(1 if ERRORS else 0)
+          EOF
+          python /tmp/validate_markdown.py
+
+  link-validation:
+    name: Check for Broken Internal Links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Validate internal links
+        run: |
+          cat > /tmp/validate_links.py << 'EOF'
+          import os
+          import sys
+          import re
+          from pathlib import Path
+          from urllib.parse import urlparse, unquote
+
+          DOCS_DIR = Path("docs")
+          BROKEN_LINKS = []
+          EXTERNAL_LINKS = []
+          WARNINGS = []
+
+          def extract_links_from_file(filepath):
+              """Extract all links from a markdown file"""
+              try:
+                  with open(filepath, 'r', encoding='utf-8') as f:
+                      content = f.read()
+              except:
+                  return []
+
+              links = []
+
+              # Find markdown links [text](url)
+              md_links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content)
+              for text, url in md_links:
+                  # Skip anchors
+                  if url.startswith('#'):
+                      continue
+                  links.append((url, filepath))
+
+              return links
+
+          def is_valid_path(link, source_file):
+              """Check if a local file link points to a valid file"""
+              # Parse the URL
+              parsed = urlparse(link)
+
+              # Skip external URLs and mailto
+              if parsed.scheme in ['http', 'https', 'mailto', 'ftp']:
+                  EXTERNAL_LINKS.append(link)
+                  return True
+
+              # Get the relative path
+              path = unquote(parsed.path)
+
+              # Remove query params and fragments
+              if '?' in path:
+                  path = path.split('?')[0]
+              if '#' in path:
+                  path = path.split('#')[0]
+
+              # Handle relative paths
+              if path.startswith('/'):
+                  target = Path(path.lstrip('/'))
+              else:
+                  # Relative to source file's directory
+                  source_dir = source_file.parent
+                  target = (source_dir / path).resolve()
+
+              # Check if file exists
+              if not target.exists():
+                  return False
+
+              return True
+
+          print("Validating internal links...")
+          print(f"{'='*70}\n")
+
+          # Scan all markdown files
+          for md_file in DOCS_DIR.rglob("*.md"):
+              links = extract_links_from_file(md_file)
+              for link, source in links:
+                  if not is_valid_path(link, source):
+                      BROKEN_LINKS.append({
+                          "file": str(source),
+                          "link": link
+                      })
+
+          # Print results
+          print(f"\n{'='*70}")
+          print("LINK VALIDATION RESULTS")
+          print('='*70)
+
+          if BROKEN_LINKS:
+              print(f"\n❌ BROKEN LINKS ({len(BROKEN_LINKS)}):")
+              for item in BROKEN_LINKS[:20]:
+                  print(f"  File: {item['file']}")
+                  print(f"    Link: {item['link']}")
+              if len(BROKEN_LINKS) > 20:
+                  print(f"\n  ... and {len(BROKEN_LINKS) - 20} more broken links")
+
+          print(f"\n✅ External links found: {len(set(EXTERNAL_LINKS))} unique domains")
+          print(f"✅ Local files checked: {sum(1 for _ in DOCS_DIR.rglob('*.md'))} markdown files")
+
+          if BROKEN_LINKS:
+              print("\n⚠️  Please fix the broken links above before merging.")
+              sys.exit(1)
+          else:
+              print("\n✅ All internal links are valid!")
+              sys.exit(0)
+          EOF
+          python /tmp/validate_links.py
+
+  file-structure:
+    name: Verify File Structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check file structure
+        run: |
+          cat > /tmp/validate_structure.py << 'EOF'
+          import os
+          import sys
+          from pathlib import Path
+          import json
+
+          DOCS_DIR = Path("docs")
+          EXPECTED_STRUCTURE = {
+              "claude-code": ["README.md"],
+              "ai-platforms": ["README.md"],
+              "ai-coding-tools": ["README.md"],
+              "ai-frameworks": ["README.md"],
+              "web-frameworks": ["README.md"],
+              "infrastructure": ["README.md"]
+          }
+
+          ISSUES = []
+          INFO = []
+
+          print(f"{'='*70}")
+          print("FILE STRUCTURE VALIDATION")
+          print('='*70 + "\n")
+
+          # Check main structure
+          for category, required_files in EXPECTED_STRUCTURE.items():
+              category_dir = DOCS_DIR / category
+              if not category_dir.exists():
+                  ISSUES.append(f"Missing category directory: {category}")
+                  continue
+
+              for required in required_files:
+                  req_file = category_dir / required
+                  if not req_file.exists():
+                      ISSUES.append(f"Missing {required} in {category}")
+                  else:
+                      INFO.append(f"✓ {category}/{required}")
+
+          # Check for llms-full.txt files
+          llms_files = list(DOCS_DIR.rglob("llms-full.txt"))
+          INFO.append(f"\n✓ Found {len(llms_files)} llms-full.txt files")
+
+          # Check directory naming
+          invalid_dirs = []
+          for subdir in DOCS_DIR.iterdir():
+              if subdir.is_dir() and subdir.name not in ['.git', '__pycache__', '.DS_Store']:
+                  if not re.match(r'^[a-z0-9\-]+$', subdir.name):
+                      invalid_dirs.append(subdir.name)
+
+          if invalid_dirs:
+              ISSUES.append(f"Invalid directory names (should be lowercase with hyphens): {invalid_dirs}")
+
+          # Check for orphaned files
+          orphaned = []
+          for item in DOCS_DIR.iterdir():
+              if item.is_file() and item.suffix in ['.md', '.txt']:
+                  if item.name not in ['README.md', 'llms-full.txt']:
+                      orphaned.append(item.name)
+
+          if orphaned:
+              ISSUES.append(f"Orphaned files in docs root: {orphaned}")
+
+          # Print results
+          for info in INFO:
+              print(info)
+
+          if ISSUES:
+              print(f"\n❌ ISSUES ({len(ISSUES)}):")
+              for issue in ISSUES:
+                  print(f"  - {issue}")
+              sys.exit(1)
+          else:
+              print("\n✅ File structure is valid!")
+              sys.exit(0)
+          EOF
+          python /tmp/validate_structure.py
+
+  readme-references:
+    name: Verify README File References
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate README references
+        run: |
+          cat > /tmp/validate_readme.py << 'EOF'
+          import os
+          import sys
+          import re
+          from pathlib import Path
+
+          DOCS_DIR = Path("docs")
+          MAIN_README = Path("README.md")
+          ERRORS = []
+          WARNINGS = []
+
+          def extract_file_references(filepath):
+              """Extract all file references from a markdown file"""
+              try:
+                  with open(filepath, 'r', encoding='utf-8') as f:
+                      content = f.read()
+              except:
+                  return []
+
+              refs = []
+
+              # Find markdown links to files
+              links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content)
+              for text, url in links:
+                  # Skip anchors, external URLs, and email
+                  if url.startswith(('#', 'http', 'mailto')):
+                      continue
+
+                  # Extract file path
+                  path = url.split('?')[0].split('#')[0]
+                  if path:
+                      refs.append((path, str(filepath)))
+
+              return refs
+
+          def check_reference(ref, source_file):
+              """Check if a file reference is valid"""
+              # Handle relative paths
+              if ref.startswith('/'):
+                  target = Path(ref.lstrip('/'))
+              else:
+                  source_dir = Path(source_file).parent
+                  target = (source_dir / ref).resolve()
+
+              return target.exists()
+
+          print(f"{'='*70}")
+          print("README REFERENCES VALIDATION")
+          print('='*70 + "\n")
+
+          # Check main README references
+          print("Checking main README.md references...")
+          refs = extract_file_references(MAIN_README)
+          for ref, source in refs:
+              if not check_reference(ref, MAIN_README):
+                  ERRORS.append(f"Main README: Invalid reference to '{ref}'")
+              else:
+                  print(f"  ✓ {ref}")
+
+          # Check category README references
+          for category_readme in DOCS_DIR.rglob("README.md"):
+              print(f"\nChecking {category_readme.relative_to('.')} references...")
+              refs = extract_file_references(category_readme)
+              for ref, source in refs:
+                  if not check_reference(ref, category_readme):
+                      rel_path = category_readme.relative_to('.')
+                      ERRORS.append(f"{rel_path}: Invalid reference to '{ref}'")
+                  else:
+                      print(f"  ✓ {ref}")
+
+          # Verify all category directories are referenced in main README
+          category_dirs = []
+          for item in DOCS_DIR.iterdir():
+              if item.is_dir() and (item / "README.md").exists():
+                  category_name = item.name.replace('-', ' ').title()
+                  category_dirs.append(item.name)
+
+                  main_content = MAIN_README.read_text()
+                  if item.name not in main_content and category_name not in main_content:
+                      WARNINGS.append(f"Category '{item.name}' not referenced in main README")
+
+          # Print results
+          print(f"\n{'='*70}")
+          print("VALIDATION RESULTS")
+          print('='*70)
+
+          if ERRORS:
+              print(f"\n❌ ERRORS ({len(ERRORS)}):")
+              for error in ERRORS:
+                  print(f"  - {error}")
+
+          if WARNINGS:
+              print(f"\n⚠️  WARNINGS ({len(WARNINGS)}):")
+              for warning in WARNINGS:
+                  print(f"  - {warning}")
+
+          if not ERRORS:
+              print(f"\n✅ All README references are valid!")
+              sys.exit(0)
+          else:
+              sys.exit(1)
+          EOF
+          python /tmp/validate_readme.py
+
+  summary:
+    name: Validation Summary
+    runs-on: ubuntu-latest
+    needs: [markdown-validation, link-validation, file-structure, readme-references]
+    if: always()
+    steps:
+      - name: Check validation results
+        run: |
+          echo "## Documentation Validation Summary"
+          echo ""
+          echo "| Check | Status |"
+          echo "|-------|--------|"
+          echo "| Markdown Syntax | ${{ needs.markdown-validation.result == 'success' && '✅ Passed' || '❌ Failed' }} |"
+          echo "| Internal Links | ${{ needs.link-validation.result == 'success' && '✅ Passed' || '❌ Failed' }} |"
+          echo "| File Structure | ${{ needs.file-structure.result == 'success' && '✅ Passed' || '❌ Failed' }} |"
+          echo "| README References | ${{ needs.readme-references.result == 'success' && '✅ Passed' || '❌ Failed' }} |"
+          echo ""
+
+          if [[ "${{ needs.markdown-validation.result }}" != "success" || \
+                "${{ needs.link-validation.result }}" != "success" || \
+                "${{ needs.file-structure.result }}" != "success" || \
+                "${{ needs.readme-references.result }}" != "success" ]]; then
+            echo "❌ Validation failed. Please review the errors above."
+            exit 1
+          fi
+
+          echo "✅ All validations passed!"
+          exit 0

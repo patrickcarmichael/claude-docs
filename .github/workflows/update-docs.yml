@@ -1,0 +1,280 @@
+name: Update Documentation
+
+on:
+  schedule:
+    # Run every Monday at 2 AM UTC
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Create update script
+        run: |
+          cat > /tmp/fetch_docs.py << 'EOF'
+          import os
+          import sys
+          import hashlib
+          import urllib.request
+          import urllib.error
+          from pathlib import Path
+          from datetime import datetime
+
+          # Known documentation sources following llms.txt standard
+          SOURCES = {
+              # AI Platforms
+              "anthropic": "https://docs.anthropic.com/llms-full.txt",
+              "cohere": "https://docs.cohere.com/llms-full.txt",
+              "fireworks": "https://docs.fireworks.ai/llms-full.txt",
+              "openrouter": "https://openrouter.ai/docs/llms-full.txt",
+              "together": "https://docs.together.ai/llms-full.txt",
+
+              # AI Coding Tools
+              "cursor": "https://docs.cursor.com/llms-full.txt",
+              "codeium": "https://docs.codeium.com/llms-full.txt",
+              "windsurf": "https://docs.codeium.com/windsurf/llms-full.txt",
+
+              # AI Frameworks
+              "crewai": "https://docs.crewai.com/llms-full.txt",
+              "langchain": "https://docs.langchain.com/llms-full.txt",
+              "langgraph": "https://docs.langchain.com/langgraph/llms-full.txt",
+
+              # Web Frameworks
+              "nextjs": "https://nextjs.org/docs/llms-full.txt",
+              "astro": "https://docs.astro.build/llms-full.txt",
+              "vercel": "https://vercel.com/docs/llms-full.txt",
+
+              # Infrastructure
+              "pinecone": "https://docs.pinecone.io/llms-full.txt",
+              "elevenlabs": "https://docs.elevenlabs.io/llms-full.txt",
+
+              # Developer Tools
+              "mcp": "https://spec.modelcontextprotocol.io/llms-full.txt",
+              "mintlify": "https://docs.mintlify.com/llms-full.txt",
+              "gitbook": "https://docs.gitbook.com/llms-full.txt",
+          }
+
+          DOCS_DIR = "docs"
+          FETCH_DIR = "docs/fetched-sources"
+          Path(FETCH_DIR).mkdir(parents=True, exist_ok=True)
+
+          changes = {}
+
+          for source_name, url in SOURCES.items():
+              print(f"\n{'='*60}")
+              print(f"Fetching: {source_name}")
+              print(f"URL: {url}")
+              print('='*60)
+
+              filepath = Path(FETCH_DIR) / f"{source_name}-llms-full.txt"
+
+              try:
+                  # Fetch with timeout
+                  request = urllib.request.Request(
+                      url,
+                      headers={'User-Agent': 'Mozilla/5.0 (Documentation Updater)'}
+                  )
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      new_content = response.read().decode('utf-8')
+
+                  # Calculate hash of new content
+                  new_hash = hashlib.md5(new_content.encode()).hexdigest()
+
+                  # Check if file exists and compare
+                  old_hash = None
+                  if filepath.exists():
+                      with open(filepath, 'r') as f:
+                          old_content = f.read()
+                      old_hash = hashlib.md5(old_content.encode()).hexdigest()
+
+                  # Save new content
+                  with open(filepath, 'w') as f:
+                      f.write(new_content)
+
+                  file_size = len(new_content) / (1024 * 1024)  # Convert to MB
+
+                  if old_hash is None:
+                      status = "NEW"
+                      changes[source_name] = {
+                          "status": "NEW",
+                          "size": f"{file_size:.2f}MB"
+                      }
+                      print(f"✓ NEW: {source_name} ({file_size:.2f}MB)")
+                  elif old_hash != new_hash:
+                      status = "UPDATED"
+                      changes[source_name] = {
+                          "status": "UPDATED",
+                          "size": f"{file_size:.2f}MB"
+                      }
+                      print(f"✓ UPDATED: {source_name} ({file_size:.2f}MB)")
+                  else:
+                      status = "UNCHANGED"
+                      print(f"✓ UNCHANGED: {source_name} ({file_size:.2f}MB)")
+
+              except urllib.error.HTTPError as e:
+                  print(f"✗ HTTP Error {e.code}: {source_name}")
+                  changes[source_name] = {
+                      "status": "ERROR",
+                      "error": f"HTTP {e.code}"
+                  }
+              except urllib.error.URLError as e:
+                  print(f"✗ Connection Error: {source_name}")
+                  changes[source_name] = {
+                      "status": "ERROR",
+                      "error": "Connection failed"
+                  }
+              except Exception as e:
+                  print(f"✗ Unexpected error: {str(e)}")
+                  changes[source_name] = {
+                      "status": "ERROR",
+                      "error": str(e)
+                  }
+
+          # Save summary
+          summary_file = Path(FETCH_DIR) / "FETCH_SUMMARY.json"
+          import json
+          summary = {
+              "timestamp": datetime.now().isoformat(),
+              "changes": changes
+          }
+          with open(summary_file, 'w') as f:
+              json.dump(summary, f, indent=2)
+
+          # Print summary
+          print(f"\n{'='*60}")
+          print("SUMMARY")
+          print('='*60)
+          for source, info in changes.items():
+              status = info.get("status", "UNKNOWN")
+              details = info.get("size", info.get("error", ""))
+              print(f"{source:20} {status:10} {details}")
+
+          sys.exit(0)
+          EOF
+          python /tmp/fetch_docs.py
+        shell: bash
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in documentation"
+            git diff --stat
+          fi
+
+      - name: Create summary
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          cat > /tmp/pr_body.md << 'EOF'
+          # Documentation Update
+
+          This automated PR updates documentation files from their official sources following the [llms.txt standard](https://llmstxt.org/).
+
+          ## Changes Summary
+
+          EOF
+
+          if [ -f "docs/fetched-sources/FETCH_SUMMARY.json" ]; then
+            python << 'PYTHON_EOF'
+          import json
+          from pathlib import Path
+
+          summary_file = Path("docs/fetched-sources/FETCH_SUMMARY.json")
+          with open(summary_file) as f:
+              data = json.load(f)
+
+          print("\n### Fetched Sources Status\n", file=open("/tmp/summary.md", "a"))
+
+          updated_count = 0
+          new_count = 0
+          error_count = 0
+
+          for source, info in data["changes"].items():
+              status = info.get("status", "UNKNOWN")
+              if status == "UPDATED":
+                  updated_count += 1
+              elif status == "NEW":
+                  new_count += 1
+              elif status == "ERROR":
+                  error_count += 1
+
+          with open("/tmp/pr_body.md", "a") as f:
+              f.write(f"**Updated**: {updated_count} files\n")
+              f.write(f"**New**: {new_count} files\n")
+              f.write(f"**Errors**: {error_count} sources\n\n")
+              f.write("### Detailed Status\n\n")
+              f.write("| Source | Status | Details |\n")
+              f.write("|--------|--------|----------|\n")
+
+              for source, info in data["changes"].items():
+                  status = info.get("status", "UNKNOWN")
+                  size = info.get("size", "N/A")
+                  error = info.get("error", "")
+                  detail = size if not error else f"Error: {error}"
+                  f.write(f"| {source} | {status} | {detail} |\n")
+
+          PYTHON_EOF
+          fi
+
+          cat >> /tmp/pr_body.md << 'EOF'
+
+          ## Verification Steps
+
+          - Review file sizes and modification timestamps
+          - Verify content integrity (files should be readable text)
+          - Check for any malformed documentation
+
+          ## Automation Details
+
+          This PR was automatically generated by the Documentation Update workflow:
+          - **Schedule**: Weekly (Monday 2 AM UTC)
+          - **Sources**: 20+ major AI/developer platforms
+          - **Format**: Following [llms.txt standard](https://llmstxt.org/)
+          - **Triggered**: ${{ github.event_name }}
+
+          ## Related Files
+
+          - Fetch summary: `docs/fetched-sources/FETCH_SUMMARY.json`
+          - Documentation index: `llms-docs/README.md`
+          - Main README: `README.md`
+
+          EOF
+
+          cat /tmp/pr_body.md
+
+      - name: Create pull request
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'docs: Update documentation from official sources'
+          title: 'docs: Auto-update documentation files (weekly)'
+          body-path: /tmp/pr_body.md
+          branch: automated/docs-update-${{ github.run_number }}
+          delete-branch: true
+          labels: |
+            documentation
+            automated
+          reviewers: |
+
+      - name: No changes found
+        if: steps.check_changes.outputs.has_changes == 'false'
+        run: |
+          echo "Documentation is up to date. No PR created."
