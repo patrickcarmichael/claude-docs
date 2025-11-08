@@ -4,6 +4,28 @@ Developer tools, databases, and platform services supporting AI applications.
 
 ## Services
 
+### 🟢 [Supabase](./supabase/)
+**Open Source Backend Platform** | 4.0MB
+
+Open source Firebase alternative with PostgreSQL, real-time subscriptions, and AI/vector support.
+
+- **Type**: Backend-as-a-Service (BaaS)
+- **Database**: PostgreSQL with pgvector for embeddings
+- **Features**: Real-time APIs, auth, storage, edge functions
+- **Best For**: Full-stack apps, RAG systems, AI integrations
+
+📄 [Full Documentation](./supabase/llms-full.txt)
+
+**AI Use Cases:**
+- Store and query embeddings with pgvector
+- OpenAI, Hugging Face, and LangChain integrations
+- Semantic search and RAG applications
+- AI-powered real-time features
+
+**Deploy**: Supabase Cloud or self-hosted
+
+---
+
 ### 🌲 [Pinecone](./pinecone/)
 **Vector Database** | 2.8MB
 
@@ -116,7 +138,8 @@ Collaborative documentation platform for teams.
 
 | Service | Category | Pricing | Best For |
 |---------|----------|---------|----------|
-| **Pinecone** | Vector DB | Pay-per-use | RAG, semantic search |
+| **Supabase** | Backend/Database | Free + pay-per-use | Full-stack, RAG, vectors |
+| **Pinecone** | Vector DB | Pay-per-use | Pure vector search |
 | **ElevenLabs** | Voice AI | Subscription | Voice interfaces |
 | **Cloudflare** | Edge platform | Free + paid tiers | Global distribution |
 | **Mintlify** | Docs platform | Free + enterprise | Product docs |

@@ -66,6 +66,7 @@ Modern web frameworks with AI/LLM integration.
 |-----------|------|------|
 | **[Next.js](./web-frameworks/nextjs/)** | React framework | 2.9M |
 | **[Astro](./web-frameworks/astro/)** | Content-focused framework | 2.5M |
+| **[Streamlit](./web-frameworks/streamlit/)** | Python data app framework | 1.4M |
 | **[Vercel](./web-frameworks/vercel/)** | Deployment platform | 7.9M |
 
 ---
@@ -75,6 +76,7 @@ Developer tools, databases, and platform services.
 
 | Service | Category | Size |
 |---------|----------|------|
+| **[Supabase](./infrastructure/supabase/)** | Backend/Database | 4.0M |
 | **[Pinecone](./infrastructure/pinecone/)** | Vector database | 2.8M |
 | **[ElevenLabs](./infrastructure/elevenlabs/)** | Voice AI | 5.5M |
 | **[Cloudflare](./infrastructure/cloudflare/)** | Edge computing | 24K |
@@ -111,9 +113,9 @@ Developer tools, databases, and platform services.
 
 ## 📊 Collection Stats
 
-- **Total Documentation**: 67 files
-- **Total Size**: ~52MB
-- **Platforms Covered**: 21
+- **Total Documentation**: 69 files (2 new platforms added)
+- **Total Size**: ~60MB (increased from 52MB)
+- **Platforms Covered**: 23 (added Streamlit, Supabase)
 - **Categories**: 6
 
 ---

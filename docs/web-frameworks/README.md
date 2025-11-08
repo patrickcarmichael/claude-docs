@@ -48,6 +48,28 @@ Modern framework optimized for content-heavy sites with optional interactivity.
 
 ---
 
+### 💬 [Streamlit](./streamlit/)
+**Data App Framework** | 1.4MB
+
+Python framework for building interactive data applications and dashboards with AI.
+
+- **Type**: Python web framework
+- **Features**: Interactive widgets, real-time updates, built-in components
+- **Best For**: Data apps, dashboards, AI demos, prototyping
+- **AI Integration**: Perfect for LLM apps, embeddings, RAG demos
+
+📄 [Full Documentation](./streamlit/llms-full.txt)
+
+**AI Use Cases:**
+- Interactive LLM demos and prototypes
+- RAG application dashboards
+- Data visualization with AI analysis
+- Quick AI app development
+
+**Deploy on**: Streamlit Cloud or [Vercel](./vercel/)
+
+---
+
 ### 🔷 [Vercel](./vercel/)
 **Deployment Platform** | 7.9MB (Largest in category)
 
@@ -76,6 +98,7 @@ Cloud platform for deploying web applications with edge capabilities.
 |-----------|------|------------|---------|------------------|
 | **Next.js** | Full-stack | Medium | Dynamic | Chat interfaces, RAG apps |
 | **Astro** | Static-first | Fast | Static + Islands | Documentation, content |
+| **Streamlit** | Python web | Instant | Dynamic | AI demos, dashboards |
 | **Vercel** | Platform | N/A | Edge + Serverless | Deploy any framework |
 
 ---
