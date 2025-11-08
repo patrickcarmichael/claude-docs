@@ -1,0 +1,264 @@
+# Model Context Protocol (MCP) Documentation - Chunked Version
+
+This is the chunked version of the Model Context Protocol (MCP) documentation for easier navigation and reading.
+
+## Table of Contents
+
+1. [Example Clients](./01-example-clients.md)
+   - Feature support matrix
+   - Client details
+   - Adding MCP support to your application
+   - Updates and corrections
+   - Antitrust Policy
+   - Introduction
+   - Participation
+   - Conduct of Meetings
+   - Requirements/Standard Setting
+   - Contact Information
+   - Contributor Communication
+   - Communication Channels
+   - Decision Records
+   - Governance and Stewardship
+   - Technical Governance
+   - Processes
+   - Communication
+   - Nominating, Confirming and Removing Maintainers
+   - Current Core Maintainers
+   - Current Maintainers and Working Groups
+   - SEP Guidelines
+   - What is a SEP?
+   - What qualifies a SEP?
+   - SEP Types
+   - Submitting a SEP
+   - Reporting SEP Bugs, or Submitting SEP Updates
+   - Transferring SEP Ownership
+   - Copyright
+   - Working and Interest Groups
+   - Purpose
+   - Mechanisms
+   - Meeting Calendar
+   - WG/IG Facilitators
+   - FAQ
+   - Roadmap
+   - Priority Areas for the Next Release
+   - Validation
+   - Get Involved
+   - Build an MCP client
+   - Next steps
+2. [Build an MCP server](./02-build-an-mcp-server.md)
+   - What's happening under the hood
+   - Troubleshooting
+   - Next steps
+   - Connect to local MCP servers
+   - Prerequisites
+   - Understanding MCP Servers
+   - Installing the Filesystem Server
+   - Using the Filesystem Server
+   - Troubleshooting
+   - Next Steps
+   - Connect to remote MCP Servers
+   - Understanding Remote MCP Servers
+   - What are Custom Connectors?
+   - Connecting to a Remote MCP Server
+   - Best Practices for Using Remote MCP Servers
+   - Next Steps
+   - What is the Model Context Protocol (MCP)?
+   - What can MCP enable?
+   - Why does MCP matter?
+   - Start Building
+   - Learn more
+   - Architecture overview
+   - Scope
+   - Concepts of MCP
+   - Example
+   - Understanding MCP clients
+   - Core Client Features
+   - Understanding MCP servers
+   - Core Server Features
+   - Bringing Servers Together
+3. [SDKs](./03-sdks.md)
+   - Available SDKs
+   - Getting Started
+   - Next Steps
+   - MCP Inspector
+   - Getting started
+   - Feature overview
+   - Best practices
+   - Next steps
+   - Understanding Authorization in MCP
+   - When Should You Use Authorization?
+   - The Authorization Flow: Step by Step
+   - Implementation Example
+   - Testing the MCP Server
+   - Common Pitfalls and How to Avoid Them
+   - Related Standards and Documentation
+   - Architecture
+   - Core Components
+   - Design Principles
+   - Capability Negotiation
+   - Authorization
+   - Introduction
+   - Authorization Flow
+   - Security Considerations
+   - Overview
+   - Messages
+   - Auth
+   - Schema
+   - Lifecycle
+   - Lifecycle Phases
+   - Timeouts
+   - Error Handling
+   - Security Best Practices
+   - Introduction
+   - Attacks and Mitigations
+   - Transports
+   - stdio
+   - Streamable HTTP
+   - Custom Transports
+   - Cancellation
+   - Cancellation Flow
+   - Behavior Requirements
+   - Timing Considerations
+   - Implementation Notes
+   - Error Handling
+   - Ping
+   - Overview
+   - Message Format
+   - Behavior Requirements
+   - Usage Patterns
+   - Implementation Considerations
+   - Error Handling
+   - Progress
+   - Progress Flow
+   - Behavior Requirements
+   - Implementation Notes
+   - Key Changes
+   - Major changes
+   - Other schema changes
+   - Full changelog
+   - Elicitation
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Request Schema
+   - Response Actions
+   - Security Considerations
+   - Roots
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Data Types
+   - Error Handling
+   - Security Considerations
+   - Implementation Guidelines
+4. [Sampling](./04-sampling.md)
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Data Types
+   - Error Handling
+   - Security Considerations
+   - Specification
+   - Overview
+   - Key Details
+   - Security and Trust & Safety
+   - Learn More
+   - Schema Reference
+   - Common Types
+   - `completion/complete`
+   - `elicitation/create`
+   - `initialize`
+   - `logging/setLevel`
+   - `notifications/cancelled`
+   - `notifications/initialized`
+   - `notifications/message`
+   - `notifications/progress`
+   - `notifications/prompts/list_changed`
+   - `notifications/resources/list_changed`
+   - `notifications/resources/updated`
+   - `notifications/roots/list_changed`
+   - `notifications/tools/list_changed`
+   - `ping`
+   - `prompts/get`
+   - `prompts/list`
+   - `resources/list`
+   - `resources/read`
+   - `resources/subscribe`
+   - `resources/templates/list`
+   - `resources/unsubscribe`
+   - `roots/list`
+   - `sampling/createMessage`
+   - `tools/call`
+   - `tools/list`
+5. [Overview](./05-overview.md)
+   - Prompts
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Data Types
+   - Error Handling
+   - Implementation Considerations
+   - Security
+   - Resources
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Data Types
+   - Common URI Schemes
+   - Error Handling
+   - Security Considerations
+   - Tools
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Data Types
+   - Error Handling
+   - Security Considerations
+   - Completion
+   - User Interaction Model
+   - Capabilities
+   - Protocol Messages
+   - Message Flow
+   - Data Types
+   - Error Handling
+   - Implementation Considerations
+   - Security
+   - Logging
+   - User Interaction Model
+   - Capabilities
+   - Log Levels
+   - Protocol Messages
+   - Message Flow
+   - Error Handling
+   - Implementation Considerations
+   - Security
+   - Pagination
+   - Pagination Model
+   - Response Format
+   - Request Format
+   - Pagination Flow
+   - Operations Supporting Pagination
+   - Implementation Guidelines
+   - Error Handling
+   - Versioning
+   - Revisions
+   - Negotiation
+   - Model Context Protocol
+   - Example Servers
+   - Reference implementations
+   - Official integrations
+   - Community implementations
+   - Getting started
+   - Using uvx
+   - Using pip
+   - Additional resources
+
+---
+
+[← Back to Model Context Protocol (MCP) README](../README.md)

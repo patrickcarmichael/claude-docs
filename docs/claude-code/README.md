@@ -110,13 +110,19 @@ Step-by-step tutorials and advanced patterns.
 
 ## 📄 Complete Documentation
 
-**[llms-full.txt](./llms-full.txt)** (532KB) - Complete documentation in LLM-optimized format
+**[llms-full.txt](./llms-full.txt)** (532KB) - Complete documentation in LLM-optimized format | **[Chunked Version](./chunked/index.md)** - Split into 9 manageable sections
 
 Perfect for:
 - Feeding to AI coding assistants
 - Context for Claude conversations
 - Training custom models
 - Offline reference
+
+**Chunked Version Benefits:**
+- 9 logical sections (~60KB each)
+- Easy navigation between topics
+- Optimized for AI consumption with size limits
+- Each chunk is a complete, readable unit
 
 ---
 

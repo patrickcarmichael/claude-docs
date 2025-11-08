@@ -291,7 +291,7 @@ LlamaIndex (Retrieval) → LangChain (Chains) → Application
 ```
 LlamaIndex Retrieval → Agent Tools → Autonomous Task Execution
 ```
-**See**: [Agent Framework Documentation](./llms-full.txt)
+**See**: [Agent Framework Documentation](./llms-full.txt) | [Chunked Version](./chunked/index.md)
 
 ## Performance Tips
 

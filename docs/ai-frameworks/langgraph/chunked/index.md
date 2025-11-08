@@ -1,0 +1,493 @@
+# LangGraph Documentation - Chunked Version
+
+This is the chunked version of the LangGraph documentation for easier navigation and reading.
+
+## Table of Contents
+
+1. [How to interact with the deployment using RemoteGraph](./01-how-to-interact-with-the-deployment-using-remotegraph.md)
+   - Initializing the graph
+   - Invoking the graph
+   - invoke the graph
+   - stream outputs from the graph
+   - invoke the graph
+   - stream outputs from the graph
+   - Thread-level persistence
+   - create a thread (or use an existing thread instead)
+   - invoke the graph with the thread config
+   - verify that the state was persisted to the thread
+   - Using as a subgraph
+   - define parent graph
+   - add remote graph directly as a node
+   - invoke the parent graph
+   - stream outputs from both the parent graph and subgraph
+   - How to integrate LangGraph with AutoGen, CrewAI, and other frameworks
+   - Prerequisites
+   - Setup
+   - 1. Define AutoGen agent
+   - 2. Create the graph
+   - Create the graph with memory for persistence
+   - Build the graph
+   - Compile with checkpointer for persistence
+   - 3. Test the graph locally
+   - pass the thread ID to persist agent outputs for future interactions
+   - 4. Prepare for deployment
+   - 5. Deploy to LangGraph Platform
+   - Enable tracing for your application
+   - Learn more
+   - How to use the graph API
+   - Setup
+   - Define and update state
+   - Define the schema for the input
+   - Define the schema for the output
+   - Define the overall schema, combining both input and output
+   - Define the node that processes the input and generates an answer
+   - Build the graph with input and output schemas specified
+   - Invoke the graph with an input and print the result
+   - The overall state of the graph (this is the public state shared across nodes)
+   - Output from node_1 contains private data that is not part of the overall state
+   - The private data is only shared between node_1 and node_2
+   - Node 2 input only requests the private data available after node_1
+   - Node 3 only has access to the overall state (no access to private data from node_1)
+   - Connect nodes in a sequence
+   - node_2 accepts private data from node_1, whereas
+   - node_3 does not see the private data.
+   - Invoke the graph with the initial state
+   - The overall state of the graph (this is the public state shared across nodes)
+   - Build the state graph
+   - Test the graph with a valid input
+   - Add runtime configuration
+   - 1. Specify config schema
+   - 2. Define a graph that accesses the config in a node
+   - 3. Pass in configuration at runtime:
+   - Add retry policies
+   - Add node caching
+   - Create a sequence of steps
+   - Add nodes
+   - Add edges
+   - Add nodes
+   - Add edges
+   - Create branches
+   - Map-Reduce and the Send API
+   - Call the graph: here we call it to generate a list of jokes
+   - Create and control loops
+   - Define nodes
+   - Define edges
+   - Async
+   - Combine control flow and state updates with `Command`
+   - Define graph state
+   - Define the nodes
+   - NOTE: there are no edges between nodes A, B and C!
+   - Visualize your graph
+   - Stream outputs
+   - Supported stream modes
+   - Stream from an agent
+   - Stream from a workflow
+   - Use the functional API
+   - Creating a simple workflow
+   - Parallel execution
+   - Calling graphs
+   - Call other entrypoints
+   - Streaming
+   - Retry policy
+   - This variable is just used for demonstration purposes to simulate a network failure.
+   - It's not something you will have in your actual code.
+   - Let's configure the RetryPolicy to retry on ValueError.
+   - The default RetryPolicy is optimized for retrying specific network errors.
+   - Caching Tasks
+   - Resuming after an error
+   - This variable is just used for demonstration purposes to simulate a network failure.
+   - It's not something you will have in your actual code.
+   - Initialize an in-memory checkpointer for persistence
+   - Workflow execution configuration with a unique thread identifier
+   - This invocation will take ~1 second due to the slow_task execution
+   - Human-in-the-loop
+   - Continue execution
+   - Short-term memory
+   - Long-term memory
+   - Workflows
+   - Agents
+   - Integrate with other libraries
+   - Use subgraphs
+   - Setup
+   - Shared state schemas
+   - Subgraph
+   - Parent graph
+   - Different state schemas
+2. [Subgraph](./02-subgraph.md)
+   - Parent graph
+   - Add persistence
+   - Subgraph
+   - Parent graph
+   - View subgraph state
+   - Stream subgraph outputs
+   - Build multi-agent systems
+   - Handoffs
+   - Build a multi-agent system
+   - Handoffs
+   - Define agents
+   - Define multi-agent graph
+   - Multi-turn conversation
+   - Prebuilt implementations
+   - How to pass custom run ID or set tags and metadata for graph runs in LangSmith
+   - TLDR
+   - Generate a random UUID -- it must be a UUID
+   - Works with all standard Runnable methods
+   - like invoke, batch, ainvoke, astream_events etc
+   - Setup
+   - Define the graph
+   - First we initialize the model we want to use.
+   - For this tutorial we will use custom tool that returns pre-defined values for weather in two cities (NYC & SF)
+   - Define the graph
+   - Run your graph
+   - View the trace in LangSmith
+   - Call tools
+   - Define a tool
+   - Run a tool
+   - Use in an agent
+   - Use in a workflow
+   - Tool customization
+   - Context management
+   - Invocation example with an agent
+   - Example agent setup
+   - Invocation: reads the name from state (initially empty)
+   - Advanced tool features
+   - Default error handling (enabled by default)
+   - Default error handling
+   - Prebuilt tools
+   - How to add cross-thread persistence (functional API)
+   - Setup
+   - Example: simple chatbot with long-term memory
+   - NOTE: we're passing the store object here when creating a workflow via entrypoint()
+   - How to build a multi-agent network (functional API)
+   - Define a tool to signal intent to hand off to a different agent
+   - define an agent
+   - define a task that calls an agent
+   - define the multi-agent network workflow
+   - Setup
+   - Travel agent example
+   - Define travel advisor ReAct agent
+   - Define hotel advisor ReAct agent
+   - How to add multi-turn conversation in a multi-agent application (functional API)
+   - Define a tool to signal intent to hand off to a different agent
+   - Note: this is not using Command(goto) syntax for navigating to different agents:
+   - `workflow()` below handles the handoffs explicitly
+   - define an agent
+   - define a task that calls an agent
+   - define the multi-agent network workflow
+   - Setup
+   - %%capture --no-stderr
+   - %pip install -U langgraph langchain-anthropic
+   - Define travel advisor ReAct agent
+   - Define hotel advisor ReAct agent
+   - Test multi-turn conversation
+   - How to add thread-level persistence (functional API)
+   - Setup
+   - Example: simple chatbot with short-term memory
+   - How to manage conversation history in a ReAct Agent
+   - Setup
+   - Keep the original message history unmodified
+   - This function will be added as a new node in ReAct agent graph
+   - that will run every time before the node that calls the LLM.
+   - The messages returned by this function will be the input to the LLM.
+   - Overwrite the original message history
+   - Summarizing message history
+   - How to integrate LangGraph (functional API) with AutoGen, CrewAI, and other frameworks
+   - Setup
+   - Define AutoGen agent
+   - Create the workflow
+   - add short-term memory for storing conversation history
+   - Run the graph
+   - pass the thread ID to persist agent outputs for future interactions
+   - filename: fibonacci_range.py
+   - How to handle large numbers of tools
+   - Setup
+   - Define the tools
+3. [Abbreviated list of S&P 500 companies for demonstration](./03-abbreviated-list-of-sp-500-companies-for-demonstration.md)
+   - Create a tool for each company and store it in a registry with a unique UUID as the key
+   - Define the graph
+   - Define the state structure using TypedDict.
+   - It includes a list of messages (processed by add_messages)
+   - and a list of selected tool IDs.
+   - Retrieve all available tools from the tool registry.
+   - The agent function processes the current state
+   - by binding selected tools to the LLM.
+   - The select_tools function selects tools based on the user's last message content.
+   - Repeating tool selection
+   - Next steps
+   - How to create a ReAct agent from scratch
+   - Setup
+   - Create ReAct agent
+   - Define our tool node
+   - Define the node that calls the model
+   - Define the conditional edge that determines whether to continue or not
+   - Define a new graph
+   - Define the two nodes we will cycle between
+   - Set the entrypoint as `agent`
+   - This means that this node is the first one called
+   - We now add a conditional edge
+   - We now add a normal edge from `tools` to `agent`.
+   - This means that after `tools` is called, `agent` node is called next.
+   - Now we can compile and visualize our graph
+   - Use ReAct agent
+   - Helper function for formatting the stream nicely
+   - How to force tool-calling agent to structure output
+   - Setup
+   - Define model, tools, and graph state
+   - Inherit 'messages' key from MessagesState, which is a list of chat messages
+   - Option 1: Bind output as tool
+   - Force the model to use tools by passing tool_choice="any"
+   - Define the function that calls the model
+   - Define the function that responds to the user
+   - Define the function that determines whether to continue or not
+   - Define a new graph
+   - Define the two nodes we will cycle between
+   - Set the entrypoint as `agent`
+   - This means that this node is the first one called
+   - We now add a conditional edge
+   - Option 2: 2 LLMs
+   - Define the function that calls the model
+   - Define the function that responds to the user
+   - Define the function that determines whether to continue or not
+   - Define a new graph
+   - Define the two nodes we will cycle between
+   - Set the entrypoint as `agent`
+   - This means that this node is the first one called
+   - We now add a conditional edge
+   - How to disable streaming for models that don't support it
+   - Without disabling streaming
+   - Disabling streaming
+   - How to create a ReAct agent from scratch (Functional API)
+   - Setup
+   - Create ReAct agent
+   - Usage
+   - Add thread-level persistence
+   - Assistants
+   - Configuration
+   - Versioning
+   - Execution
+   - LangGraph Studio
+   - Features
+   - Learn more
+   - Double Texting
+   - Reject
+   - Enqueue
+   - Interrupt
+   - Rollback
+   - LangGraph runtime
+   - Overview
+   - Actors
+   - Channels
+   - Examples
+   - High-level API
+   - LangGraph Platform Plans
+   - Overview
+   - Plan Details
+   - Related
+   - Template Applications
+   - Install the LangGraph CLI
+   - Available Templates
+   - 🌱 Create a LangGraph App
+   - Next Steps
+   - Tools
+   - Tool calling
+   - -> AIMessage(tool_calls=[{'name': 'multiply', 'args': {'a': 2, 'b': 3}, ...}])
+   - Prebuilt tools
+   - Custom tools
+   - Tool execution
+   - Subgraphs
+   - Cloud SaaS
+   - Overview
+   - Architecture
+   - Components
+   - Standalone Container
+   - Overview
+   - Architecture
+   - Compute Platforms
+   - Human-in-the-loop
+   - Key capabilities
+   - Patterns
+   - MCP endpoint in LangGraph Server
+   - Requirements
+   - Exposing an agent as MCP tool
+   - Define input schema
+   - Define output schema
+   - Combine input and output
+   - Define the processing node
+   - Build the graph with explicit schemas
+   - Run the graph
+   - Usage overview
+   - Create server parameters for stdio connection
+   - Session behavior
+   - Authentication
+   - Disable MCP
+   - Self-Hosted Data Plane
+   - Requirements
+   - Self-Hosted Data Plane
+   - Streaming
+   - What’s possible with LangGraph streaming
+   - Functional API concepts
+   - Overview
+   - Functional API vs. Graph API
+   - Example
+   - Entrypoint
+   - Task
+   - When to use a task
+   - Serialization
+   - Determinism
+   - Idempotency
+   - Common Pitfalls
+   - Deployment Options
+   - Free deployment
+   - Production deployment
+   - Cloud SaaS
+   - Self-Hosted Data Plane
+   - Self-Hosted Control Plane
+   - Standalone Container
+   - Related
+   - LangGraph SDK
+   - Installation
+   - Python sync vs. async
+   - Learn more
+   - LangGraph Server
+   - Application structure
+   - Parts of a deployment
+   - Learn more
+   - LangGraph Platform
+   - Why use LangGraph Platform?
+   - Tracing
+   - Learn more
+   - Memory
+   - Short-term memory
+   - Long-term memory
+4. [Node that *uses* the instructions](./04-node-that-uses-the-instructions.md)
+   - Node that updates instructions
+   - InMemoryStore saves data to an in-memory dictionary. Use a DB-backed store in production use.
+   - get the "memory" by ID
+   - search for "memories" within this namespace, filtering on content equivalence, sorted by vector similarity
+   - Agent architectures
+   - Router
+   - Tool-calling agent
+   - Custom agent architectures
+   - Authentication & Access Control
+   - Core Concepts
+   - Default Security Models
+   - System Architecture
+   - Authentication
+   - Authorization
+   - Generic / global handler catches calls that aren't handled by more specific handlers
+   - Matches the "thread" resource and all actions - create, read, update, delete, search
+   - Since this is **more specific** than the generic @auth.on handler, it will take precedence
+   - over the generic handler for all actions on the "threads" resource
+   - Thread creation. This will match only on thread create actions
+   - Since this is **more specific** than both the generic @auth.on handler and the @auth.on.threads handler,
+   - it will take precedence for any "create" actions on the "threads" resources
+   - Reading a thread. Since this is also more specific than the generic @auth.on handler, and the @auth.on.threads handler,
+   - it will take precedence for any "read" actions on the "threads" resource
+   - Run creation, streaming, updates, etc.
+   - This takes precedenceover the generic @auth.on handler and the @auth.on.threads handler
+   - Assistant creation
+   - Common Access Patterns
+   - In your auth handler:
+   - Supported Resources
+   - Next Steps
+   - FAQ
+   - Do I need to use LangChain to use LangGraph? What’s the difference?
+   - How is LangGraph different from other agent frameworks?
+   - Does LangGraph impact the performance of my app?
+   - Is LangGraph open source? Is it free?
+   - How are LangGraph and LangGraph Platform different?
+   - Is LangGraph Platform open source?
+   - Does LangGraph work with LLMs that don't support tool calling?
+   - Does LangGraph work with OSS LLMs?
+   - Can I use LangGraph Studio without logging in to LangSmith
+   - What does "nodes executed" mean for LangGraph Platform usage?
+   - MCP
+   - Multi-agent systems
+   - Multi-agent architectures
+   - this is the agent function that will be called as tool
+   - notice that you can pass the state to the tool via InjectedState annotation
+   - the simplest way to build a supervisor w/ tool-calling is to use prebuilt ReAct agent graph
+   - that consists of a tool-calling LLM node (i.e. supervisor) and a tool-executing node
+   - define team 1 (same as the single supervisor example above)
+   - define team 2 (same as the single supervisor example above)
+   - define top-level supervisor
+   - define the flow explicitly
+   - Communication and state management
+   - Scalability & Resilience
+   - Server scalability
+   - Queue scalability
+   - Resilience
+   - Postgres resilience
+   - Redis resilience
+   - Graph API concepts
+   - Graphs
+   - State
+   - {'graph_output': 'My name is Lance'}
+   - this is supported
+   - and this is also supported
+   - Nodes
+   - You can then create edges to/from this node by referencing it as `"my_node"`
+   - Edges
+   - `Send`
+   - `Command`
+   - Graph Migrations
+   - Runtime Context
+   - Visualization
+   - LangGraph Control Plane
+   - Control Plane UI
+   - Control Plane API
+   - Control Plane Features
+   - Durable Execution
+   - Requirements
+   - Determinism and Consistent Replay
+   - Durability modes
+   - Using tasks in nodes
+   - Resuming Workflows
+   - Starting Points for Resuming Workflows
+   - LangGraph Data Plane
+   - Server Infrastructure
+   - "Listener" Application
+   - Postgres
+   - Redis
+   - Data Plane Features
+   - Overview
+   - Learn LangGraph basics
+   - Self-Hosted Control Plane
+   - Requirements
+   - Self-Hosted Control Plane
+   - LangGraph CLI
+   - Installation
+   - Commands
+   - Persistence
+   - Threads
+   - Checkpoints
+   - get the latest state snapshot
+   - get a state snapshot for a specific checkpoint_id
+   - Memory Store
+5. [Find memories about food preferences](./05-find-memories-about-food-preferences.md)
+   - (This can be done after putting memories into the store)
+   - Store with specific fields to embed
+   - Store without embedding (still retrievable, but not searchable)
+   - We need this because we want to enable threads (conversations)
+   - ... Define the graph ...
+   - Compile the graph with the checkpointer and store
+   - Invoke the graph
+   - First let's just say hi to the AI
+   - Invoke the graph
+   - Let's say hi again
+   - Checkpointer libraries
+   - ... Define the graph ...
+   - Capabilities
+   - Application Structure
+   - Overview
+   - Key Concepts
+   - File Structure
+   - Configuration File {#configuration-file-concepts}
+   - Dependencies
+   - Graphs
+   - Environment Variables
+   - Time Travel ⏱️
+
+---
+
+[← Back to LangGraph README](../README.md)

@@ -1,0 +1,2519 @@
+# CrewAI Documentation - Chunked Version
+
+This is the chunked version of the CrewAI documentation for easier navigation and reading.
+
+## Table of Contents
+
+1. [Agents](./01-agents.md)
+   - Overview of an Agent
+   - Agent Attributes
+   - Creating Agents
+   - src/latest_ai_development/config/agents.yaml
+   - src/latest_ai_development/crew.py
+   - Create an agent with all available parameters
+   - Agent Tools
+   - Create tools
+   - Add tools to agent
+   - Agent Memory and Context
+   - Context Window Management
+   - Agent with automatic context management (default)
+   - Agent with strict context limits
+   - Perfect for document processing
+   - Perfect for precision tasks
+   - Create RAG tool for large document processing
+   - Use knowledge sources instead of large prompts
+   - Quick fix: Enable automatic handling
+   - Better solution: Use RAG tools for large data
+   - Alternative: Break tasks into smaller pieces
+   - Or use knowledge sources instead of large prompts
+   - Disable auto-summarization and use RAG instead
+   - Direct Agent Interaction with `kickoff()`
+   - Create an agent
+   - Use kickoff() to interact directly with the agent
+   - Access the raw response
+   - Get structured output
+   - Access structured data
+   - Important Considerations and Best Practices
+   - Troubleshooting Common Issues
+   - CLI
+   - Overview
+   - Installation
+   - Basic Usage
+   - Available Commands
+   - Collaboration
+   - Overview
+   - Quick Start: Enable Collaboration
+   - Enable collaboration for agents
+   - Agents can now collaborate automatically
+   - How Agent Collaboration Works
+   - Agent automatically gets this tool:
+   - Delegate work to coworker(task: str, context: str, coworker: str)
+   - Agent automatically gets this tool:
+   - Ask question to coworker(question: str, context: str, coworker: str)
+   - Collaboration in Action
+   - Create collaborative agents
+   - Create a task that encourages collaboration
+   - Create collaborative crew
+   - Collaboration Patterns
+   - Hierarchical Collaboration
+   - Manager agent coordinates the team
+   - Specialist agents
+   - Manager-led task
+   - Hierarchical crew
+   - Best Practices for Collaboration
+   - ✅ Good: Specific, complementary roles
+   - ❌ Avoid: Overlapping or vague roles
+   - ✅ Enable delegation for coordinators and generalists
+   - ✅ Disable for focused specialists (optional)
+   - ✅ Use context parameter for task dependencies
+   - ✅ Specific, actionable descriptions
+   - ❌ Vague descriptions that don't guide collaboration
+   - Troubleshooting Collaboration
+   - ✅ Solution: Ensure delegation is enabled
+   - ✅ Solution: Provide better context and specific roles
+   - ✅ Solution: Clear hierarchy and responsibilities
+   - Advanced Collaboration Features
+   - Set specific collaboration guidelines in agent backstory
+   - Memory and Learning
+   - Next Steps
+   - Crews
+   - Overview
+   - Crew Attributes
+   - Creating Crews
+   - Crew Output
+   - Example crew execution
+   - Accessing the crew output
+   - Accessing Crew Logs
+   - Save crew logs
+   - Memory Utilization
+   - Cache Utilization
+   - Crew Usage Metrics
+   - Access the crew's usage metrics
+   - Crew Execution Process
+   - Start the crew's task execution
+   - Start the crew's task execution
+   - Example of using kickoff_for_each
+   - Example of using kickoff_async
+   - Example of using kickoff_for_each_async
+   - Event Listeners
+   - Overview
+   - How It Works
+   - Creating a Custom Event Listener
+   - Properly Registering Your Listener
+   - In your crew.py file
+   - Create an instance of your listener
+   - In your main.py or flow.py file
+   - Create an instance of your listener
+   - my_custom_listener.py
+   - ... import events ...
+   - Create an instance of your listener
+   - __init__.py
+   - Optionally export them if you need to access them elsewhere
+   - In your crew.py or flow.py file
+   - Available Event Types
+   - Event Handler Structure
+   - Advanced Usage: Scoped Handlers
+   - Outside the context, the temporary handler is removed
+   - Use Cases
+   - Best Practices
+   - Flows
+   - Overview
+   - Getting Started
+   - Flow State Management
+   - Flow Persistence
+   - Flow Control
+   - Adding Agents to Flows
+   - Define a structured output format
+   - Define flow state
+   - Create a flow class
+   - Usage example
+   - Run the flow
+   - Adding Crews to Flows
+   - Plot Flows
+   - Assuming you have a flow instance
+   - Next Steps
+   - Running Flows
+   - Knowledge
+   - Overview
+   - Quickstart Examples
+   - ChromaDB (default)
+   - Qdrant
+   - Example operations (same API for any provider)
+   - Create a knowledge source
+   - Create an LLM with a temperature of 0 to ensure deterministic outputs
+   - Create an agent with the knowledge store
+   - Create a knowledge source from web content
+   - Create an LLM with a temperature of 0 to ensure deterministic outputs
+   - Create an agent with the knowledge store
+   - Supported Knowledge Sources
+   - Agent vs Crew Knowledge: Complete Guide
+   - Agent with its own knowledge - NO crew knowledge needed
+   - No crew-level knowledge required
+   - During kickoff
+   - Agent knowledge storage
+   - Crew knowledge storage
+   - Both stored in same ChromaDB instance but different collections
+   - Path: ~/.local/share/CrewAI/{project}/knowledge/
+   - ├── crew/                    # Crew knowledge collection
+   - ├── Technical Specialist/    # Agent knowledge collection
+   - └── Another Agent Role/      # Another agent's collection
+   - Agent-specific knowledge
+   - No crew knowledge needed
+   - Crew-wide knowledge (shared by all agents)
+   - Agent-specific knowledge
+   - Result:
+   - - specialist gets: crew_knowledge + specialist_knowledge
+2. [- generalist gets: crew_knowledge only](./02-generalist-gets-crewknowledge-only.md)
+   - Different knowledge for different agents
+   - Each agent gets only their specific knowledge
+   - Each can use different embedding providers
+   - Knowledge Configuration
+   - Supported Knowledge Parameters
+   - Knowledge Storage Transparency
+   - Get the knowledge storage path
+   - List knowledge collections and files
+   - Set custom storage location for all CrewAI data
+   - All knowledge will now be stored in ./my_project_storage/knowledge/
+   - Create custom storage with specific embedder
+   - Use with knowledge sources
+   - Store knowledge in project directory
+   - Now all knowledge will be stored in your project directory
+   - When using Claude as your LLM...
+   - CrewAI will still use OpenAI embeddings by default for knowledge
+   - This ensures consistency but may not match your LLM provider preference
+   - Option 1: Use Voyage AI (recommended by Anthropic for Claude users)
+   - Option 2: Use local embeddings (no external API calls)
+   - Option 3: Agent-level embedding customization
+   - Advanced Features
+   - Original task prompt
+   - Behind the scenes, this might be rewritten as:
+   - Create an instance of your listener
+   - Debugging and Troubleshooting
+   - Before kickoff - knowledge not initialized
+   - After kickoff - knowledge initialized
+   - Check storage structure
+   - Test agent knowledge retrieval
+   - Connect to CrewAI's knowledge ChromaDB
+   - Create a test knowledge source
+   - Check chunking behavior
+   - Process and inspect chunks
+   - Ensure files are in the correct location
+   - This happens when switching embedding providers
+   - Reset knowledge storage to clear old embeddings
+   - Or use consistent embedding providers
+   - Fix storage permissions
+   - Verify storage location consistency
+   - Reset only agent-specific knowledge
+   - Reset both crew and agent knowledge
+   - CLI commands
+   - crewai reset-memories --agent-knowledge  # Agent knowledge only
+   - crewai reset-memories --knowledge        # All knowledge
+   - Best Practices
+   - LLMs
+   - Overview
+   - What are LLMs?
+   - Setting up your LLM
+   - Provider Configuration Examples
+   - Streaming Responses
+   - Structured LLM Calls
+   - Output:
+   - Dog(name='Kona', age=3, breed='black german shepherd')
+   - Advanced Features and Optimization
+   - Common Issues and Solutions
+   - Memory
+   - Overview
+   - Memory System Components
+   - 1. Basic Memory System (Recommended)
+   - Enable basic memory system
+   - Storage Location Transparency
+   - Get the base storage path
+   - List all CrewAI storage directories
+   - Set custom storage location
+   - All memory and knowledge will now be stored in ./my_project_storage/
+   - Configure custom storage location
+   - Store in project directory
+   - Now all storage will be in your project directory
+   - When using Claude as your LLM...
+   - CrewAI will use OpenAI embeddings by default for consistency
+   - You can easily customize this to match your preferred provider
+   - Option 1: Match your LLM provider
+   - Option 2: Use local embeddings (no external API calls)
+   - Create with proper permissions
+   - Connect to CrewAI's ChromaDB
+   - Reset all memory storage
+   - Reset specific memory types
+   - Fix permissions
+   - Ensure only one CrewAI instance accesses storage
+   - Verify storage location is consistent
+   - Custom Embedder Configuration
+   - Basic OpenAI configuration (uses environment OPENAI_API_KEY)
+   - Advanced OpenAI configuration
+   - First, install and run Ollama locally, then pull an embedding model:
+   - ollama pull mxbai-embed-large
+   - For custom Ollama installations
+   - Set environment variables
+   - Use without exposing keys in code
+   - Test different providers with the same data
+   - Verify model availability
+   - Check if API keys are set
+   - Compare performance
+   - 2. External Memory
+   - Create external memory instance with local Mem0 Configuration
+   - Create external memory instance with Mem0 Client
+   - Use custom storage
+   - 🧠 Memory System Comparison
+   - Supported Embedding Providers
+   - Security Best Practices
+   - Store sensitive data in environment variables
+   - Use secure storage paths
+   - Troubleshooting
+   - Benefits of Using CrewAI's Memory System
+   - Memory Events
+   - Create an instance of your listener
+   - Configure logging
+   - Create an instance of your listener
+   - Configure logging
+   - Create an instance of your listener
+   - Conclusion
+   - Planning
+   - Overview
+   - Processes
+   - Overview
+   - Process Implementations
+   - The Role of Processes in Teamwork
+   - Assigning Processes to a Crew
+   - Example: Creating a crew with a sequential process
+   - Example: Creating a crew with a hierarchical process
+   - Ensure to provide a manager_llm or manager_agent
+   - Sequential Process
+   - Hierarchical Process
+   - Process Class: Detailed Overview
+   - Conclusion
+   - Reasoning
+   - Overview
+   - Usage
+   - How It Works
+   - Configuration Options
+   - Example
+   - Create an agent with reasoning enabled
+   - Create a task
+   - Create a crew and run the task
+   - Error Handling
+   - Set up logging to capture any reasoning errors
+   - Create an agent with reasoning enabled
+   - Create a task
+   - Execute the task
+   - If an error occurs during reasoning, it will be logged and execution will continue
+   - Example Reasoning Output
+   - Tasks
+   - Overview
+   - Task Attributes
+   - Creating Tasks
+3. [src/latest_ai_development/crew.py](./03-srclatestaidevelopmentcrewpy.md)
+   - Task Output
+   - Example task
+   - Execute the crew
+   - Accessing the task output
+   - Markdown Output Formatting
+   - Example task with markdown formatting enabled
+   - Task Dependencies and Context
+   - Task Guardrails
+   - Getting Structured Consistent Outputs from Tasks
+   - Instantiate your crew with a sequential process
+   - Option 1: Accessing Properties Using Dictionary-Style Indexing
+   - Option 2: Accessing Properties Directly from the Pydantic Model
+   - Option 3: Accessing Properties Using the to_dict() Method
+   - Option 4: Printing the Entire Blog Object
+   - Define the Pydantic model for the blog
+   - Define the agent
+   - Define the task with output_json set to the Blog model
+   - Instantiate the crew with a sequential process
+   - Kickoff the crew to execute the task
+   - Option 1: Accessing Properties Using Dictionary-Style Indexing
+   - Option 2: Printing the Entire Blog Object
+   - Integrating Tools with Tasks
+   - Creating a Task with Tools
+   - to perform a semantic search for a specified query from a text's content across the internet
+   - Referring to Other Tasks
+   - ...
+   - Asynchronous Execution
+   - Callback Mechanism
+   - ...
+   - Accessing a Specific Task Output
+   - ...
+   - Returns a TaskOutput object with the description and results of the task
+   - Tool Override Mechanism
+   - Error Handling and Validation Mechanisms
+   - Creating Directories when Saving Files
+   - Default behavior - directories are created automatically
+   - Strict mode - directory must already exist
+   - Conclusion
+   - Testing
+   - Overview
+   - Tools
+   - Overview
+   - What is a Tool?
+   - Key Characteristics of Tools
+   - Using CrewAI Tools
+   - Importing crewAI tools
+   - Set up API keys
+   - Instantiate tools
+   - Create agents
+   - Define tasks
+   - Assemble a crew with planning enabled
+   - Execute tasks
+   - Available CrewAI Tools
+   - Creating your own Tools
+   - Asynchronous Tool Support
+   - In standard Crew
+   - In Flow
+   - Conclusion
+   - Training
+   - Overview
+   - How trained data is used by agents
+   - Small Language Model Considerations
+   - Customizing Prompts
+   - Why Customize Prompts?
+   - Understanding CrewAI's Prompt System
+   - Understanding Default System Instructions
+   - Create your agent
+   - Create a sample task
+   - Create the prompt generator
+   - Generate and inspect the actual prompt
+   - Print the complete system prompt that will be sent to the LLM
+   - You can also see how the task description gets formatted
+   - Define your own system template without default instructions
+   - Best Practices for Managing Prompt Files
+   - The Simplest Way to Customize Prompts
+   - Create agents and tasks as normal
+   - Create a crew with your custom prompt file
+   - Run the crew
+   - Optimizing for Specific Models
+   - Define templates for system, user (prompt), and assistant (response) messages
+   - Create an Agent using Llama-specific layouts
+   - Define a sample task
+   - Create a Crew for the task
+   - Execute the crew
+   - Conclusion
+   - Fingerprinting
+   - Overview
+   - How Fingerprints Work
+   - Basic Usage
+   - Create components - fingerprints are automatically generated
+   - Access the fingerprints
+   - Print the UUID strings
+   - Add metadata to the agent's fingerprint
+   - Access the metadata
+   - Fingerprint Persistence
+   - Modify the agent
+   - The fingerprint remains unchanged
+   - Deterministic Fingerprints
+   - Create a deterministic fingerprint using a seed string
+   - The same seed always produces the same fingerprint
+   - You can also set metadata
+   - Advanced Usage
+   - UUID string - the unique identifier (auto-generated)
+   - Creation timestamp (auto-generated)
+   - Metadata - for additional information (can be customized)
+   - Crafting Effective Agents
+   - The Art and Science of Agent Design
+   - The 80/20 Rule: Focus on Tasks Over Agents
+   - Core Principles of Effective Agent Design
+   - Practical Examples: Before and After
+   - Crafting Effective Tasks for Your Agents
+   - Task 1
+   - Task 2
+   - Task 3
+   - Common Mistakes to Avoid
+   - Task 1: Research
+   - Task 2: Competitive Analysis
+   - Continue with additional focused tasks...
+   - Advanced Agent Design Strategies
+   - Research Agent
+   - Writer Agent
+   - Editor Agent
+   - For complex reasoning tasks
+   - For creative content
+   - Testing and Iterating on Agent Design
+   - Conclusion
+   - Next Steps
+   - Evaluating Use Cases for CrewAI
+   - Understanding the Decision Framework
+   - The Complexity-Precision Matrix Explained
+   - Choosing Between Crews and Flows
+   - Example: Research Crew for market analysis
+   - Create specialized agents
+   - Define their tasks
+   - Create the crew
+   - Run the crew
+   - Example: Customer Support Flow with structured processing
+   - Define structured state
+   - Run the flow
+   - Example: Content Production Pipeline combining Crews and Flows
+   - Run the flow
+   - Practical Evaluation Framework
+   - Conclusion
+   - Next Steps
+   - Build Your First Crew
+   - Unleashing the Power of Collaborative AI
+   - Step 1: Create a New CrewAI Project
+   - Step 2: Explore the Project Structure
+   - Step 3: Configure Your Agents
+   - src/research_crew/config/agents.yaml
+   - Step 4: Define Your Tasks
+   - src/research_crew/config/tasks.yaml
+   - Step 5: Configure Your Crew
+   - src/research_crew/crew.py
+   - Step 6: Set Up Your Main Script
+   - src/research_crew/main.py
+   - Create output directory if it doesn't exist
+   - Step 7: Set Up Your Environment Variables
+   - Add your provider's API key here too.
+   - Step 8: Install Dependencies
+   - Step 9: Run Your Crew
+   - Step 10: Review the Output
+   - Exploring Other CLI Commands
+   - View all available commands
+   - Run the crew
+   - Test the crew
+   - Reset crew memories
+   - Replay from a specific task
+   - The Art of the Possible: Beyond Your First Crew
+   - Next Steps
+   - Build Your First Flow
+   - Taking Control of AI Workflows with Flows
+   - Prerequisites
+   - Step 1: Create a New CrewAI Flow Project
+   - Step 2: Understanding the Project Structure
+   - Step 3: Add a Content Writer Crew
+   - Step 4: Configure the Content Writer Crew
+   - src/guide_creator_flow/crews/content_crew/config/agents.yaml
+   - src/guide_creator_flow/crews/content_crew/config/tasks.yaml
+   - src/guide_creator_flow/crews/content_crew/content_crew.py
+   - Step 5: Create the Flow
+   - Define our models for structured data
+   - Define our flow state
+   - Step 6: Set Up Your Environment Variables
+   - or
+   - or
+   - Step 7: Install Dependencies
+   - Step 8: Run Your Flow
+   - Step 9: Visualize Your Flow
+   - Step 10: Review the Output
+   - The Art of the Possible: Beyond Your First Flow
+   - Key Features Demonstrated
+   - Understanding the Flow Structure
+   - Next Steps
+4. [Mastering Flow State Management](./04-mastering-flow-state-management.md)
+   - Understanding the Power of State in Flows
+   - State Management Fundamentals
+   - Unstructured State Management
+   - Run the flow
+   - Structured State Management
+   - Define your state model
+   - Create a flow with typed state
+   - Run the flow
+   - The Automatic State ID
+   - Dynamic State Updates
+   - Persisting Flow State
+   - First run
+   - Second run - state is automatically loaded
+   - Advanced State Patterns
+   - State Management with Crews
+   - Best Practices for State Management
+   - Too broad
+   - Better: Focused state
+   - Simple flow can use unstructured state
+   - Complex flow benefits from structured state
+   - Instead of modifying lists in place:
+   - Consider creating new state:
+   - Debugging Flow State
+   - Conclusion
+   - Next Steps
+   - Installation
+   - Video Tutorial
+   - Text Tutorial
+   - Creating a CrewAI Project
+   - Enterprise Installation Options
+   - Next Steps
+   - Introduction
+   - What is CrewAI?
+   - How Crews Work
+   - Key Features
+   - How Flows Work
+   - When to Use Crews vs. Flows
+   - Why Choose CrewAI?
+   - Ready to Start Building?
+   - MCP DSL Integration
+   - Overview
+   - Basic Usage
+   - MCP tools are now automatically available!
+   - No need for manual connection management or tool configuration
+   - Supported Reference Formats
+   - Basic HTTPS server
+   - Server with authentication
+   - Server with custom path
+   - Get only the forecast tool from weather server
+   - Get only the search tool from Exa
+   - Full service with all tools
+   - Specific tool from AMP service
+   - Multiple AMP services
+   - Complete Example
+   - Create agent with multiple MCP sources
+   - Create comprehensive research task
+   - Create and execute crew
+   - Tool Naming and Organization
+   - Original MCP server has tools: "search", "analyze"
+   - CrewAI creates tools: "mcp_exa_ai_search", "mcp_exa_ai_analyze"
+   - Each server's tools get unique prefixes based on the server name
+   - This prevents naming conflicts between different MCP servers
+   - Error Handling and Resilience
+   - Agent will:
+   - 1. Successfully connect to working servers
+   - 2. Log warnings for failing servers
+   - 3. Continue with available tools
+   - 4. Not crash or hang on server failures
+   - These servers will timeout gracefully if unresponsive
+   - Performance Features
+   - First agent creation - discovers tools from server
+   - Second agent creation (within 5 minutes) - uses cached tool schemas
+   - Agent creation is fast - no MCP connections made yet
+   - MCP connection is made only when a tool is actually executed
+   - This minimizes connection overhead and improves startup performance
+   - Integration with Existing Features
+   - Best Practices
+   - Good - only get the tools you need
+   - Less efficient - gets all tools from server
+   - Store API keys in environment variables
+   - Always include backup options
+   - Troubleshooting
+   - Check your MCP server URL and authentication
+   - Verify the server is running and accessible
+   - Server may be slow or overloaded
+   - CrewAI will log warnings and continue with other servers
+   - Check server status or try backup servers
+   - Verify API keys and credentials
+   - Check server documentation for required parameters
+   - Ensure query parameters are properly URL encoded
+   - Advanced: MCPServerAdapter
+   - Connecting to Multiple MCP Servers
+   - Overview
+   - Configuration
+   - Define parameters for multiple MCP servers
+   - Connection Management
+   - MCP Servers as Tools in CrewAI
+   - Overview
+   - MCP tools are now automatically available to your agent!
+   - Video Tutorial
+   - Installation
+   - For Simple DSL Integration (Recommended)
+   - For Advanced MCPServerAdapter usage
+   - Quick Start: Simple DSL Integration
+   - Create agent with MCP tools using string references
+   - Create task
+   - Create and run crew
+   - Create agent with structured MCP configurations
+   - Create task
+   - Create and run crew
+   - MCP Reference Formats
+   - Static filtering (allow/block lists)
+   - Dynamic filtering (context-aware)
+   - Configuration Parameters
+   - Key Features
+   - Error Handling
+   - Agent will use tools from working servers and log warnings for failing ones
+   - Advanced: MCPServerAdapter
+   - Connection Configuration
+   - Example with custom connection timeout
+   - Example server_params (choose one based on your server type):
+   - 1. Stdio Server:
+   - 2. SSE Server:
+   - 3. Streamable HTTP Server:
+   - Example usage (uncomment and adapt once server_params is set):
+   - Filtering Tools
+   - Using with CrewBase
+   - Explore MCP Integrations
+   - Staying Safe with MCP
+   - MCP Security Considerations
+   - Overview
+   - 4. Secure MCP Server Implementation Advice (For Developers)
+   - 5. Further Reading
+   - SSE Transport
+   - Overview
+   - Key Concepts
+   - Connecting via SSE
+   - Using MCPServerAdapter with a context manager
+   - Security Considerations for SSE
+   - Stdio Transport
+   - Overview
+   - Key Concepts
+   - Connecting via Stdio
+   - Create a StdioServerParameters object
+   - Create a StdioServerParameters object
+   - Streamable HTTP Transport
+   - Overview
+   - Key Concepts
+   - Connecting via Streamable HTTP
+   - Security Considerations
+   - Quickstart
+   - Build your first CrewAI Agent
+   - Deploying Your Crew
+   - AI Mind Tool
+   - `AIMindTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the AIMindTool
+   - Run a natural language query
+   - Parameters
+   - Agent Integration Example
+   - Initialize the tool
+   - Define an agent with the AIMindTool
+   - Conclusion
+   - Code Interpreter
+   - `CodeInterpreterTool`
+   - Description
+   - Logging
+   - Installation
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to generate and execute code
+   - Create and run the crew
+   - Create an agent with code execution enabled
+   - Parameters
+   - Agent Integration Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Create a task for the agent
+   - Run the task
+   - Implementation Details
+   - Security Considerations
+   - Conclusion
+   - DALL-E Tool
+   - `DallETool`
+   - Description
+   - Installation
+   - Example
+   - LangChain Tool
+   - `LangChainTool`
+   - Set up your SERPER_API_KEY key in an .env file, eg:
+   - SERPER_API_KEY=<your api key>
+   - Create Agents
+   - rest of the code ...
+   - Conclusion
+   - LlamaIndex Tool
+   - `LlamaIndexTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Example 1: Initialize from FunctionTool
+   - Create a LlamaIndex FunctionTool
+   - Wrap it with LlamaIndexTool
+   - Define an agent that uses the tool
+   - Initialize from LlamaHub Tools
+   - Load documents
+   - Create an index
+   - Create a query engine
+   - Create a LlamaIndexTool from the query engine
+   - Class Methods
+   - Parameters
+   - Conclusion
+5. [Overview](./05-overview.md)
+   - **Available Tools**
+   - **Common Use Cases**
+   - Create AI tools
+   - Add to your agent
+   - RAG Tool
+   - `RagTool`
+   - Description
+   - Example
+   - Create a RAG tool with default settings
+   - Add content from a file
+   - Add content from a web page
+   - Define an agent with the RagTool
+   - Supported Data Sources
+   - Parameters
+   - Adding Content
+   - Add a PDF file
+   - Add a web page
+   - Add a YouTube video
+   - Add a directory of files
+   - Agent Integration Example
+   - Initialize the tool and add content
+   - Define an agent with the RagTool
+   - Advanced Configuration
+   - Create a RAG tool with custom configuration
+   - Conclusion
+   - Vision Tool
+   - `VisionTool`
+   - Description
+   - Installation
+   - Usage
+   - Arguments
+   - Bedrock Knowledge Base Retriever
+   - `BedrockKBRetrieverTool`
+   - Installation
+   - Requirements
+   - Usage
+   - Initialize the tool
+   - Create a CrewAI agent that uses the tool
+   - Create a task for the agent
+   - Create a crew with the agent
+   - Run the crew
+   - Tool Arguments
+   - Environment Variables
+   - Response Format
+   - Advanced Usage
+   - Supported Data Sources
+   - Use Cases
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - Create cloud tools
+   - Add to your agent
+   - S3 Reader Tool
+   - `S3ReaderTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to read a configuration file
+   - Create and run the crew
+   - Parameters
+   - AWS Credentials
+   - Usage
+   - Example of using the tool with an agent
+   - Create a task for the agent to read a specific file
+   - Run the task
+   - Error Handling
+   - Implementation Details
+   - Conclusion
+   - S3 Writer Tool
+   - `S3WriterTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to write a report
+   - Create and run the crew
+   - Parameters
+   - AWS Credentials
+   - Usage
+   - Example of using the tool with an agent
+   - Create a task for the agent to write a specific file
+   - Run the task
+   - Error Handling
+   - Implementation Details
+   - Conclusion
+   - MongoDB Vector Search Tool
+   - `MongoDBVectorSearchTool`
+   - Description
+   - Installation
+   - Parameters
+   - Quick start
+   - Index creation helpers
+   - Common issues
+   - More examples
+   - Load text content from a local folder and add to MongoDB
+   - Create the Atlas Vector Search index (e.g., 3072 dims for text-embedding-3-large)
+   - Example
+   - MySQL RAG Search
+   - Overview
+   - Installation
+   - Example
+   - Initialize the tool with the database URI and the target table name
+   - Arguments
+   - Custom model and embeddings
+   - NL2SQL Tool
+   - Overview
+   - Requirements
+   - Installation
+   - Usage
+   - psycopg2 was installed to run this example with PostgreSQL
+   - Example
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - Create database tools
+   - Add to your agent
+   - PG RAG Search
+   - Overview
+   - Description
+   - Installation
+   - Example Usage
+   - Initialize the tool with the database URI and the target table name
+   - Arguments
+   - Custom Model and Embeddings
+   - Qdrant Vector Search Tool
+   - Overview
+   - Installation
+   - Basic Usage
+   - Initialize the tool with QdrantConfig
+   - Create an agent that uses the tool
+   - The tool will automatically use OpenAI embeddings
+   - and return the 3 most relevant results with scores > 0.35
+   - Complete Working Example
+   - Load environment variables
+   - Initialize OpenAI client
+   - Extract text from PDF
+   - Generate OpenAI embeddings
+   - Store text and embeddings in Qdrant
+   - Initialize Qdrant client and load data
+   - Initialize Qdrant search tool
+   - Create CrewAI agents
+   - Define tasks
+   - Run CrewAI workflow
+   - Tool Parameters
+   - Advanced Filtering
+   - Agent will use these parameters when calling the tool
+   - The tool schema accepts filter_by and filter_value
+   - Example: search with category filter
+   - Results will be filtered where category == "technology"
+   - Create a filter for specific conditions
+   - Initialize tool with preset filter
+   - If QdrantConfig has a preset filter for category="research"
+   - And the search uses filter_by="year", filter_value=2024
+   - Both filters will be combined (AND logic)
+   - Search Parameters
+   - Return Format
+   - Default Embedding
+   - Custom Embeddings
+   - Load model and tokenizer
+   - Use custom embeddings with the tool
+   - Error Handling
+   - Environment Variables
+   - SingleStore Search Tool
+   - `SingleStoreSearchTool`
+   - Description
+   - Installation
+   - Environment Variables
+   - Example
+   - Snowflake Search Tool
+   - `SnowflakeSearchTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Create Snowflake configuration
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to query sales data
+   - Create and run the crew
+   - Initialize the tool with custom parameters
+   - Parameters
+   - Usage
+   - Example of using the tool with an agent
+   - The agent will use the tool with parameters like:
+   - query="SELECT product_name, SUM(revenue) as total_revenue FROM sales GROUP BY product_name ORDER BY total_revenue DESC LIMIT 5"
+   - timeout=600
+   - Create a task for the agent
+   - Run the task
+   - Advanced Features
+   - Error Handling
+   - Conclusion
+   - Weaviate Vector Search
+   - Overview
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Parameters
+   - Advanced Configuration
+   - Setup custom model for vectorizer and generative model
+   - Preloading Documents
+   - Connect to Weaviate
+   - Get or create collection
+   - Load documents
+   - Initialize the tool
+   - Agent Integration Example
+   - Initialize the tool
+   - Create an agent with the tool
+   - Conclusion
+   - CSV RAG Search
+   - `CSVSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool with a specific CSV file.
+   - This setup allows the agent to only search the given CSV file.
+   - OR
+   - Initialize the tool without a specific CSV file.
+   - Agent will need to provide the CSV path at runtime.
+   - Arguments
+   - Custom model and embeddings
+   - Directory Read
+   - `DirectoryReadTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool so the agent can read any directory's content
+   - it learns about during execution
+   - OR
+   - Initialize the tool with a specific directory,
+   - so the agent can only read the content of the specified directory
+   - Arguments
+   - Directory RAG Search
+   - `DirectorySearchTool`
+   - Description
+   - Installation
+   - Initialization and Usage
+   - For dynamic directory specification at runtime
+   - For fixed directory searches
+   - Arguments
+   - Custom Model and Embeddings
+   - DOCX RAG Search
+   - `DOCXSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool to search within any DOCX file's content
+   - OR
+   - Initialize the tool with a specific DOCX file,
+   - so the agent can only search the content of the specified DOCX file
+   - Arguments
+   - Custom model and embeddings
+   - File Read
+   - Overview
+   - Installation
+   - Usage Example
+   - Initialize the tool to read any files the agents knows or lean the path for
+   - OR
+   - Initialize the tool with a specific file path, so the agent can only read the content of the specified file
+   - Arguments
+   - File Write
+   - `FileWriterTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool
+   - Write content to a file in a specified directory
+   - Arguments
+   - Conclusion
+   - JSON RAG Search
+   - `JSONSearchTool`
+   - Description
+   - Installation
+   - Usage Examples
+   - General JSON content search
+   - This approach is suitable when the JSON path is either known beforehand or can be dynamically identified.
+   - Restricting search to a specific JSON file
+   - Use this initialization method when you want to limit the search scope to a specific JSON file.
+   - Arguments
+   - Configuration Options
+   - MDX RAG Search
+   - `MDXSearchTool`
+   - Description
+   - Installation
+   - Usage Example
+   - Initialize the tool to search any MDX content it learns about during execution
+   - OR
+   - Initialize the tool with a specific MDX file path for an exclusive search within that document
+   - Parameters
+   - Customization of Model and Embeddings
+   - OCR Tool
+   - `OCRTool`
+   - Description
+   - Installation
+   - Parameters
+   - Examples
+   - Notes
+   - Example
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - **Quick Start Example**
+   - Create tools
+   - Add to your agent
+   - **Tips for Document Processing**
+   - PDF Text Writing Tool
+   - `PDFTextWritingTool`
+   - Description
+   - Parameters
+   - Example
+   - Tips
+   - PDF RAG Search
+   - `PDFSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool allowing for any PDF content search if the path is provided during execution
+   - OR
+   - Initialize the tool with a specific PDF path for exclusive search within that document
+   - Arguments
+   - Custom model and embeddings
+   - - embedding_model (required): choose provider + provider-specific config
+   - - vectordb (required): choose vector DB and pass its config
+   - TXT RAG Search
+   - Overview
+   - Installation
+   - Example
+   - Initialize the tool to search within any text file's content
+   - the agent learns about during its execution
+   - OR
+   - Initialize the tool with a specific text file,
+   - so the agent can search within the given text file's content
+   - Arguments
+   - Custom model and embeddings
+   - XML RAG Search
+   - `XMLSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Allow agents to search within any XML file's content
+   - OR
+   - Initialize the tool with a specific XML file path
+   - Arguments
+   - Custom model and embeddings
+   - Tools Overview
+   - **Tool Categories**
+   - **Quick Access**
+   - **Getting Started**
+   - Add tools to your agent
+   - **Max Usage Count**
+   - Arxiv Paper Tool
+   - `ArxivPaperTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Parameters
+   - Output format
+   - Usage Notes
+   - Troubleshooting
+   - Related links
+   - Error Handling
+   - Brave Search
+   - `BraveSearchTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool for internet searching capabilities
+   - Execute a search
+   - Parameters
+   - Example with Parameters
+   - Initialize the tool with custom parameters
+   - Execute a search
+   - Agent Integration Example
+   - Initialize the tool
+   - Define an agent with the BraveSearchTool
+   - Conclusion
+   - Code Docs RAG Search
+   - `CodeDocsSearchTool`
+   - Description
+   - Installation
+   - Example
+   - To search any code documentation content
+   - if the URL is known or discovered during its execution:
+   - OR
+   - To specifically focus your search on a given documentation site
+   - by providing its URL:
+   - Arguments
+   - Custom model and embeddings
+   - Databricks SQL Query Tool
+   - `DatabricksQueryTool`
+   - Description
+   - Installation
+   - Environment Variables
+   - Example
+   - Parameters
+   - Defaults on initialization
+   - EXA Search Web Loader
+   - `EXASearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool for internet searching capabilities
+   - Steps to Get Started
+   - Conclusion
+   - Github Search
+   - `GithubSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool for semantic searches within a specific GitHub repository
+   - OR
+   - Initialize the tool for semantic searches within a specific GitHub repository, so the agent can search any repository if it learns about during its execution
+   - Arguments
+   - Custom model and embeddings
+   - Linkup Search Tool
+   - `LinkupSearchTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool with your API key
+   - Define an agent that uses the tool
+   - Parameters
+   - Advanced Usage
+   - Perform a search with custom parameters
+   - Return Format
+   - Error Handling
+   - Conclusion
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - Create research tools
+   - Add to your agent
+   - SerpApi Google Search Tool
+   - `SerpApiGoogleSearchTool`
+   - Description
+   - Installation
+   - Environment Variables
+   - Example
+   - Notes
+   - Parameters
+   - Notes
+   - SerpApi Google Shopping Tool
+   - `SerpApiGoogleShoppingTool`
+   - Description
+   - Installation
+   - Environment Variables
+   - Example
+   - Notes
+   - Parameters
+   - Google Serper Search
+   - `SerperDevTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool for internet searching capabilities
+   - Parameters
+   - Example with Parameters
+   - Using Tool: Search the internet
+   - Search results: Title: Role of chat gpt in public health
+   - Link: https://link.springer.com/article/10.1007/s10439-023-03172-7
+   - Snippet: … ChatGPT in public health. In this overview, we will examine the potential uses of ChatGPT in
+   - ---
+   - Title: Potential use of chat gpt in global warming
+   - Link: https://link.springer.com/article/10.1007/s10439-023-03171-8
+   - Snippet: … as ChatGPT, have the potential to play a critical role in advancing our understanding of climate
+   - ---
+   - Using Tool: Search the internet
+   - Search results: Title: Jeux Olympiques de Paris 2024 - Actualités, calendriers, résultats
+   - Link: https://olympics.com/fr/paris-2024
+   - Snippet: Quels sont les sports présents aux Jeux Olympiques de Paris 2024 ? · Athlétisme · Aviron · Badminton · Basketball · Basketball 3x3 · Boxe · Breaking · Canoë ...
+   - ---
+   - Title: Billetterie Officielle de Paris 2024 - Jeux Olympiques et Paralympiques
+   - Link: https://tickets.paris2024.org/
+   - Snippet: Achetez vos billets exclusivement sur le site officiel de la billetterie de Paris 2024 pour participer au plus grand événement sportif au monde.
+   - ---
+   - Conclusion
+   - Tavily Extractor Tool
+   - Installation
+   - Example Usage
+   - Ensure TAVILY_API_KEY is set in your environment
+   - os.environ["TAVILY_API_KEY"] = "YOUR_API_KEY"
+   - Initialize the tool
+   - Create an agent that uses the tool
+   - Define a task for the agent
+   - Create and run the crew
+   - Configuration Options
+   - Advanced Usage
+   - Example with multiple URLs and advanced extraction
+   - Configure the tool with custom parameters
+   - Initialize with custom configuration
+   - Features
+   - Response Format
+   - Use Cases
+   - Tavily Search Tool
+   - Installation
+   - Environment Variables
+   - Example Usage
+   - Ensure the TAVILY_API_KEY environment variable is set
+   - os.environ["TAVILY_API_KEY"] = "YOUR_TAVILY_API_KEY"
+   - Initialize the tool
+   - Create an agent that uses the tool
+   - Create a task for the agent
+   - Form the crew and kick it off
+   - Configuration Options
+   - Advanced Usage
+   - Example: Initialize with specific parameters
+   - The agent will use these defaults
+   - Features
+   - Response Format
+6. [Website RAG Search](./06-website-rag-search.md)
+   - `WebsiteSearchTool`
+   - Description
+   - Installation
+   - Example Usage
+   - Example of initiating tool that agents can use
+   - to search across any discovered websites
+   - Example of limiting the search to the content of a specific website,
+   - so now agents can only search within that website
+   - Arguments
+   - Customization Options
+   - YouTube Channel RAG Search
+   - `YoutubeChannelSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool for general YouTube channel searches
+   - Define an agent that uses the tool
+   - Example task to search for information in a specific channel
+   - Create and run the crew
+   - Initialize the tool with a specific YouTube channel handle
+   - Define an agent that uses the tool
+   - Parameters
+   - Custom Model and Embeddings
+   - Agent Integration Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Create a task for the agent
+   - Run the task
+   - Implementation Details
+   - Conclusion
+   - YouTube Video RAG Search
+   - `YoutubeVideoSearchTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool for general YouTube video searches
+   - Define an agent that uses the tool
+   - Example task to search for information in a specific video
+   - Create and run the crew
+   - Initialize the tool with a specific YouTube video URL
+   - Define an agent that uses the tool
+   - Parameters
+   - Custom Model and Embeddings
+   - Agent Integration Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Create a task for the agent
+   - Run the task
+   - Implementation Details
+   - Conclusion
+   - Bright Data Tools
+   - Bright Data Tools
+   - Installation
+   - Environment Variables
+   - Included Tools
+   - Examples
+   - Troubleshooting
+   - Example
+   - Browserbase Web Loader
+   - `BrowserbaseLoadTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool with the Browserbase API key and Project ID
+   - Arguments
+   - Firecrawl Crawl Website
+   - `FirecrawlCrawlWebsiteTool`
+   - Description
+   - Installation
+   - Example
+   - Arguments
+   - Firecrawl Scrape Website
+   - `FirecrawlScrapeWebsiteTool`
+   - Description
+   - Installation
+   - Example
+   - Arguments
+   - Hyperbrowser Load Tool
+   - `HyperbrowserLoadTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool with your API key
+   - Define an agent that uses the tool
+   - Parameters
+   - Supported Parameters
+   - Return Format
+   - Conclusion
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - **Quick Start Example**
+   - Create scraping tools
+   - Add to your agent
+   - **Scraping Best Practices**
+   - **Tool Selection Guide**
+   - Oxylabs Scrapers
+   - Installation
+   - `OxylabsAmazonProductScraperTool`
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - `OxylabsAmazonSearchScraperTool`
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - `OxylabsGoogleSearchScraperTool`
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - `OxylabsUniversalScraperTool`
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - make sure OXYLABS_USERNAME and OXYLABS_PASSWORD variables are set
+   - Scrape Element From Website Tool
+   - `ScrapeElementFromWebsiteTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to extract headlines from a news website
+   - Create and run the crew
+   - Initialize the tool with predefined parameters
+   - Parameters
+   - Usage
+   - Example of using the tool with an agent
+   - Create a task for the agent to extract specific elements
+   - Run the task through a crew
+   - Implementation Details
+   - Conclusion
+   - Scrapegraph Scrape Tool
+   - `ScrapegraphScrapeTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to extract product information from an e-commerce site
+   - Create and run the crew
+   - Initialize the tool with predefined parameters
+   - Parameters
+   - Usage
+   - Example of using the tool with an agent
+   - Create a task for the agent to extract specific content
+   - Run the task
+   - Error Handling
+   - Create a task that includes error handling instructions
+   - Rate Limiting
+   - Implementation Details
+   - Conclusion
+   - Scrape Website
+   - `ScrapeWebsiteTool`
+   - Description
+   - Installation
+   - Example
+   - To enable scrapping any website it finds during it's execution
+   - Initialize the tool with the website URL,
+   - so the agent can only scrap the content of the specified website
+   - Extract the text from the site
+   - Arguments
+   - Scrapfly Scrape Website Tool
+   - `ScrapflyScrapeWebsiteTool`
+   - Description
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to extract content from a website
+   - Create and run the crew
+   - Example with custom scraping parameters
+   - The agent will use the tool with parameters like:
+   - url="https://web-scraping.dev/products"
+   - scrape_format="markdown"
+   - ignore_scrape_failures=True
+   - scrape_config={
+   - "asp": True,  # Bypass scraping blocking solutions, like Cloudflare
+   - "render_js": True,  # Enable JavaScript rendering with a cloud headless browser
+   - "proxy_pool": "public_residential_pool",  # Select a proxy pool
+   - "country": "us",  # Select a proxy location
+   - "auto_scroll": True,  # Auto scroll the page
+   - }
+   - Parameters
+   - Scrapfly Configuration Options
+   - Usage
+   - Example of using the tool with an agent
+   - Create a task for the agent
+   - Run the task
+   - Create a task with more specific instructions
+   - Error Handling
+   - Create a task that instructs the agent to handle errors
+   - Implementation Details
+   - Conclusion
+   - Selenium Scraper
+   - `SeleniumScrapingTool`
+   - Description
+   - Installation
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to scrape content from a website
+   - Create and run the crew
+   - Initialize the tool with predefined parameters
+   - Define an agent that uses the tool
+   - Parameters
+   - Agent Integration Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Create a task for the agent
+   - Run the task
+   - Implementation Details
+   - Handling Dynamic Content
+   - Conclusion
+   - Spider Scraper
+   - `SpiderTool`
+   - Description
+   - Installation
+   - Example
+   - Arguments
+   - Stagehand Tool
+   - Overview
+   - Overview
+   - Prerequisites
+   - Usage
+   - Initialize the tool with your API keys using a context manager
+   - Initialize the tool with your API keys
+   - Command Types
+   - Perform an action (default behavior)
+   - Fill out a form
+   - Extract all product information
+   - Extract specific information with a selector
+   - Find interactive elements
+   - Identify form fields
+   - Configuration Options
+   - Best Practices
+   - Troubleshooting
+   - Additional Resources
+   - CrewAI Documentation
+   - Get started
+   - Build the basics
+   - Enterprise journey
+   - What’s new
+   - Stay connected
+   - Agent Repositories
+   - Benefits of Agent Repositories
+   - Creating and Use Agent Repositories
+   - Create an agent by loading it from a repository
+   - The agent is loaded with all its predefined configurations
+   - Load agents from repositories
+   - Create tasks
+   - Create the crew
+   - Run the crew
+   - Define a structured output format
+   - Load an agent from repository
+   - Get a free-form response
+   - Get structured output
+   - Access structured data
+   - Best Practices
+   - Organization Management
+   - View current organization
+   - Switch to a different organization
+   - List all available organizations
+   - Automations
+   - Overview
+   - Deployment Methods
+   - Automations Dashboard
+   - Best Practices
+   - Related
+   - Crew Studio
+   - Overview
+   - Prompt‑based Creation
+   - Visual Editor
+   - Execution & Debugging
+   - Publish & Export
+   - Best Practices
+   - Related
+   - Hallucination Guardrail
+   - Overview
+   - What are Hallucinations?
+   - Basic Usage
+   - Basic usage - will use task's expected_output as context
+   - With explicit reference context
+   - Create your task with the guardrail
+   - Advanced Configuration
+   - Strict guardrail requiring high faithfulness score
+   - Guardrail with tool response context
+   - How It Works
+   - Guardrail Results
+   - Example of guardrail result structure
+   - Integration with Task System
+   - Task output validation flow
+   - Best Practices
+   - Performance Considerations
+   - Troubleshooting
+   - Marketplace
+   - Overview
+   - Discoverability
+   - Install & Enable
+   - Related
+   - Role-Based Access Control (RBAC)
+   - Overview
+   - Users and Roles
+   - Automation‑level Access Control
+   - Tools & Integrations
+   - Overview
+   - Explore
+   - Related
+7. [Traces](./07-traces.md)
+   - Overview
+   - What are Traces?
+   - Accessing Traces
+   - Understanding the Trace Interface
+   - Using Traces for Debugging
+   - Performance and batching
+   - Webhook Streaming
+   - Overview
+   - Usage
+   - Webhook Format
+   - Supported Events
+   - Triggers Overview
+   - Trigger Capabilities
+   - Managing Triggers
+   - Building Trigger-Driven Automations
+   - Troubleshooting
+   - Azure OpenAI Setup
+   - Setup Process
+   - Verification
+   - Troubleshooting
+   - Build Crew
+   - Overview
+   - Getting Started
+   - Support and Resources
+   - Open Telemetry Logs
+   - Prerequisites
+   - How to capture telemetry logs
+   - Deploy Crew
+   - Prerequisites
+   - Option 1: Deploy Using CrewAI CLI
+   - Additional CLI Commands
+   - List all your deployments
+   - Get the status of your deployment
+   - View the logs of your deployment
+   - Push updates after code changes
+   - Remove a deployment
+   - Option 2: Deploy Directly via Web Interface
+   - ⚠️ Environment Variable Security Requirements
+   - ❌ These will cause deployment failures
+   - ✅ Use these naming patterns instead
+   - Enable Crew Studio
+   - What is Crew Studio?
+   - Configuration Steps
+   - Using Crew Studio
+   - Example Workflow
+   - Gmail Trigger
+   - Overview
+   - Enabling the Gmail Trigger
+   - Example: Process new emails
+   - View all available triggers
+   - Simulate a Gmail trigger with realistic payload
+   - Monitoring Executions
+   - Troubleshooting
+   - Google Calendar Trigger
+   - Overview
+   - Enabling the Google Calendar Trigger
+   - Example: Summarize meeting details
+   - Testing Locally
+   - View all available triggers
+   - Simulate a Google Calendar trigger with realistic payload
+   - Monitoring Executions
+   - Troubleshooting
+   - Google Drive Trigger
+   - Overview
+   - Enabling the Google Drive Trigger
+   - Example: Summarize file activity
+   - Testing Locally
+   - View all available triggers
+   - Simulate a Google Drive trigger with realistic payload
+   - Monitoring Executions
+   - Troubleshooting
+   - HubSpot Trigger
+   - Prerequisites
+   - Setup Steps
+   - Kickoff Crew
+   - Overview
+   - Method 1: Using the Web Interface
+   - Method 2: Using the API
+   - Handling Executions
+   - Microsoft Teams Trigger
+   - Overview
+   - Enabling the Microsoft Teams Trigger
+   - Example: Summarize a new chat thread
+   - Testing Locally
+   - View all available triggers
+   - Simulate a Microsoft Teams trigger with realistic payload
+   - Troubleshooting
+   - OneDrive Trigger
+   - Overview
+   - Enabling the OneDrive Trigger
+   - Example: Audit file permissions
+   - Testing Locally
+   - View all available triggers
+   - Simulate a OneDrive trigger with realistic payload
+   - Troubleshooting
+   - Outlook Trigger
+   - Overview
+   - Enabling the Outlook Trigger
+   - Example: Summarize a new email
+   - Testing Locally
+   - View all available triggers
+   - Simulate an Outlook trigger with realistic payload
+   - Troubleshooting
+   - Salesforce Trigger
+   - Overview
+   - Demo
+   - Getting Started
+   - Use Cases
+   - Next Steps
+   - Slack Trigger
+   - Prerequisites
+   - Setup Steps
+   - Tips
+   - Update Crew
+   - Why Update Your Crew?
+   - 1. Updating Your Crew Code for a Latest Commit
+   - 2. Resetting Bearer Token
+   - 3. Updating Environment Variables
+   - After Updating
+   - Zapier Trigger
+   - Prerequisites
+   - Step-by-Step Setup
+   - Tips for Success
+   - Asana Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Asana Integration
+   - Available Actions
+   - Usage Examples
+8. [Create an agent with Asana capabilities](./08-create-an-agent-with-asana-capabilities.md)
+   - Task to create a new project
+   - Run the task
+   - Create agent with specific Asana actions only
+   - Task to create and assign a task
+   - Complex task involving multiple Asana operations
+   - Box Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Box Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Box capabilities
+   - Task to create a folder structure
+   - Run the task
+   - Create agent with specific Box actions only
+   - Task to organize files
+   - Complex task involving multiple Box operations
+   - ClickUp Integration
+   - Overview
+   - Prerequisites
+   - Setting Up ClickUp Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Clickup capabilities
+   - Task to create a new task
+   - Run the task
+   - Task to manage task workflow
+   - Complex task involving multiple ClickUp operations
+   - Task to analyze and optimize task distribution
+   - GitHub Integration
+   - Overview
+   - Prerequisites
+   - Setting Up GitHub Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Github capabilities
+   - Task to create a new issue
+   - Run the task
+   - Task to manage issue workflow
+   - Task to create a new release
+   - Complex task involving multiple GitHub operations
+   - Gmail Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Gmail Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Gmail capabilities
+   - Task to send a follow-up email
+   - Run the task
+   - Create agent with specific Gmail actions only
+   - Task to prepare and send emails
+   - Create agent with Gmail search and analysis capabilities
+   - Task to analyze email patterns
+   - Create agent with Gmail thread management capabilities
+   - Task to organize email threads
+   - Google Calendar Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Google Calendar Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Google Calendar capabilities
+   - Task to create a meeting
+   - Run the task
+   - Task to schedule a meeting with availability check
+   - Task to manage event updates
+   - Task to coordinate availability
+   - Complex scheduling automation task
+   - Troubleshooting
+   - Google Contacts Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Google Contacts Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Google Contacts capabilities
+   - Task to retrieve and organize contacts
+   - Run the task
+   - Task to search and manage directory
+   - Task to create and update contacts
+   - Task to organize contact groups
+   - Complex contact management task
+   - Troubleshooting
+   - Google Docs Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Google Docs Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Google Docs capabilities
+   - Task to create a new document
+   - Run the task
+   - Create an agent focused on text editing
+   - Task to edit document content
+   - Create an agent for advanced document operations
+   - Task to format document
+   - Troubleshooting
+   - Google Drive Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Google Drive Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Google Drive capabilities
+   - Task to organize files
+   - Run the task
+   - Create agent with specific Google Drive actions only
+   - Task to upload and share documents
+   - Complex task involving multiple Google Drive operations
+   - Google Sheets Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Google Sheets Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Google Sheets capabilities
+   - Task to add new data to a spreadsheet
+   - Run the task
+   - Create agent with specific Google Sheets actions only
+   - Task to collect and organize data
+   - Task to analyze data and create reports
+   - Task to create and set up new spreadsheets
+   - Task to update data based on conditions
+   - Complex workflow task
+   - Troubleshooting
+   - Google Slides Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Google Slides Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Google Slides capabilities
+   - Task to create a presentation
+   - Run the task
+   - Task to create and update presentations
+   - Task to create data-driven presentations
+   - Task to manage presentation library
+   - Complex presentation automation task
+   - Task to create templates
+   - Troubleshooting
+   - HubSpot Integration
+   - Overview
+   - Prerequisites
+   - Setting Up HubSpot Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with HubSpot capabilities
+   - Task to create a new company
+   - Run the task
+   - Create agent with specific HubSpot actions only
+   - Task to create a contact
+   - Create agent with HubSpot contact management capabilities
+   - Task to manage contacts
+   - Jira Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Jira Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Jira capabilities
+   - Task to create a bug report
+   - Run the task
+   - Task to manage issue workflow
+   - Task to analyze project status
+   - Task to automate issue management
+9. [Task using schema-based operations](./09-task-using-schema-based-operations.md)
+   - Troubleshooting
+   - Linear Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Linear Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Linear capabilities
+   - Task to create a bug report
+   - Run the task
+   - Task to manage issue workflow
+   - Task to coordinate project setup
+   - Task to create issue hierarchy
+   - Complex workflow automation task
+   - Troubleshooting
+   - Microsoft Excel Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Microsoft Excel Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Excel capabilities
+   - Task to create and populate a workbook
+   - Run the task
+   - Task to analyze existing data
+   - Task to create structured workbooks
+   - Task to manipulate data
+   - Complex automation task
+   - Task for financial modeling
+   - Troubleshooting
+   - Microsoft OneDrive Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Microsoft OneDrive Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Microsoft OneDrive capabilities
+   - Task to list files and create a folder
+   - Run the task
+   - Create an agent focused on file operations
+   - Task to upload and manage a file
+   - Create an agent for file organization and sharing
+   - Task to organize and share files
+   - Troubleshooting
+   - Microsoft Outlook Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Microsoft Outlook Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Microsoft Outlook capabilities
+   - Task to send an email
+   - Run the task
+   - Create an agent focused on email management
+   - Task to search and retrieve emails
+   - Create an agent for calendar and contact management
+   - Task to create a meeting and add a contact
+   - Troubleshooting
+   - Microsoft SharePoint Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Microsoft SharePoint Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with SharePoint capabilities
+   - Task to organize SharePoint content
+   - Run the task
+   - Task to manage list data
+   - Task to manage documents
+   - Task for site administration
+   - Complex workflow automation task
+   - Task for data integration
+   - Troubleshooting
+   - Microsoft Teams Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Microsoft Teams Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Microsoft Teams capabilities
+   - Task to list teams and channels
+   - Run the task
+   - Create an agent focused on messaging
+   - Task to send a message and retrieve recent messages
+   - Create an agent for meeting management
+   - Task to create a meeting
+   - Troubleshooting
+   - Microsoft Word Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Microsoft Word Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Microsoft Word capabilities
+   - Task to create a new text document
+   - Run the task
+   - Create an agent focused on document operations
+   - Task to list and read documents
+   - Create an agent for document management
+   - Task to organize documents
+   - Troubleshooting
+   - Notion Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Notion Integration
+   - Available Actions
+   - Usage Examples
+   - Create an agent with Notion capabilities
+   - Task to list workspace users
+   - Run the task
+   - Task to create comments on pages
+   - Task to coordinate team activities
+   - Task to facilitate collaboration
+   - Complex communication automation task
+   - Troubleshooting
+   - Salesforce Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Salesforce Integration
+   - Available Tools
+   - Usage Examples
+   - Create an agent with Salesforce capabilities
+   - Task to create a new lead
+   - Run the task
+   - Task to manage sales pipeline
+   - Task to manage customer accounts
+   - Complex task involving SOQL queries and data analysis
+   - Shopify Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Shopify Integration
+   - Available Tools
+   - Usage Examples
+   - Create an agent with Shopify capabilities
+   - Task to create a new customer
+   - Run the task
+   - Task to manage store operations
+   - Task to manage product catalog
+   - Complex task involving multiple operations
+   - Slack Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Slack Integration
+   - Available Tools
+   - Block Kit Integration
+   - Usage Examples
+   - Create an agent with Slack capabilities
+   - Task to send project updates
+   - Run the task
+   - Create agent with specific Slack actions only
+   - Task to coordinate team communication
+   - Create agent with Slack messaging capabilities
+   - Task to send rich notifications
+   - Create agent with Slack search and user management capabilities
+   - Complex task involving search and analysis
+   - Contact Support
+   - Stripe Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Stripe Integration
+   - Available Tools
+   - Usage Examples
+10. [Create an agent with Stripe capabilities](./10-create-an-agent-with-stripe-capabilities.md)
+   - Task to create a new customer
+   - Run the task
+   - Task to manage billing operations
+   - Task to manage subscription operations
+   - Complex task involving financial analysis
+   - Subscription Status Reference
+   - Metadata Usage
+   - Zendesk Integration
+   - Overview
+   - Prerequisites
+   - Setting Up Zendesk Integration
+   - Available Tools
+   - Custom Fields
+   - Ticket Priority Levels
+   - Ticket Status Workflow
+   - Usage Examples
+   - Create an agent with Zendesk capabilities
+   - Task to create a new support ticket
+   - Run the task
+   - Create agent with specific Zendesk actions only
+   - Task to manage support workflow
+   - Task to manage ticket lifecycle
+   - Complex task involving analytics and reporting
+   - CrewAI AMP
+   - Introduction
+   - Key Features
+   - Deployment Options
+   - Getting Started
+   - Coding Agents
+   - Introduction
+   - Enabling Code Execution
+   - Important Considerations
+   - Code Execution Process
+   - Example Usage
+   - Create an agent with code execution enabled
+   - Create a task that requires code execution
+   - Create a crew and add the task
+   - Execute the crew
+   - Conditional Tasks
+   - Introduction
+   - Example Usage
+   - Define a condition function for the conditional task
+   - If false, the task will be skipped, if true, then execute the task.
+   - Define the agents
+   - Create a crew with the tasks
+   - Run the crew
+   - Create Custom Tools
+   - Creating and Utilizing Tools in CrewAI
+   - Custom LLM Implementation
+   - Overview
+   - Quick Start
+   - Using Your Custom LLM
+   - Assuming you have the CustomLLM class defined above
+   - Create your custom LLM
+   - Use with an agent
+   - Create and execute tasks
+   - Required Methods
+   - Common Patterns
+   - Function Calling
+   - Troubleshooting
+   - ❌ Wrong - missing required parameters
+   - ✅ Correct
+   - Testing Your Custom LLM
+   - Custom Manager Agent
+   - Setting a Specific Agent as Manager in CrewAI
+   - Using the `manager_agent` Attribute
+   - Define your agents
+   - Define your task
+   - Define the manager agent
+   - Instantiate your crew with a custom manager
+   - Start the crew's work
+   - Benefits of a Custom Manager Agent
+   - Setting a Manager LLM
+   - Customize Agents
+   - Customizable Attributes
+   - Advanced Customization Options
+   - Performance and Debugging Settings
+   - Customizing Agents and Tools
+   - Set API keys for tool initialization
+   - Initialize a search tool
+   - Initialize the agent with advanced options
+   - Delegation and Autonomy
+   - Conclusion
+   - Image Generation with DALL-E
+   - Prerequisites
+   - Setting Up the DALL-E Tool
+   - Using the DALL-E Tool
+   - Best Practices
+   - Troubleshooting
+   - Force Tool Output as Result
+   - Introduction
+   - Forcing Tool Output as Result
+   - Create a coding agent with the custom tool
+   - Assuming the tool's execution and result population occurs within the system
+   - Workflow in Action
+   - Hierarchical Process
+   - Introduction
+   - Hierarchical Process Overview
+   - Implementing the Hierarchical Process
+   - Agents are defined with attributes for backstory, cache, and verbose mode
+   - Establishing the crew with a hierarchical process and additional configurations
+   - Define a custom manager agent
+   - Use the custom manager in your crew
+   - Conclusion
+   - Human-in-the-Loop (HITL) Workflows
+   - Setting Up HITL Workflows
+   - Best Practices
+   - Common Use Cases
+   - Human Input on Execution
+   - Human input in agent execution
+   - Using human input with CrewAI
+   - Loading Tools
+   - Define your agents with roles, goals, tools, and additional attributes
+   - Create tasks for your agents
+   - Instantiate your crew with a sequential process
+   - Get your crew to work!
+   - Kickoff Crew Asynchronously
+   - Introduction
+   - Asynchronous Crew Execution
+   - Potential Use Cases
+   - Example: Single Asynchronous Crew Execution
+   - Create an agent with code execution enabled
+   - Create a task that requires code execution
+   - Create a crew and add the task
+   - Async function to kickoff the crew asynchronously
+   - Run the async function
+   - Example: Multiple Asynchronous Crew Executions
+   - Create an agent with code execution enabled
+   - Create tasks that require code execution
+   - Create two crews and add tasks
+   - Async function to kickoff multiple crews asynchronously and wait for all to finish
+   - Run the async function
+   - Kickoff Crew for Each
+   - Introduction
+   - Kicking Off a Crew for Each Item
+   - Create an agent with code execution enabled
+   - Create a task that requires code execution
+   - Create a crew and add the task
+   - Execute the crew
+   - Connect to any LLM
+   - Connect CrewAI to LLMs
+   - Supported Providers
+   - Changing the LLM
+   - Configuration Options
+   - Connecting to OpenAI-Compatible LLMs
+   - Using Local Models with Ollama
+   - Changing the Base API URL
+   - Conclusion
+   - Strategic LLM Selection Guide
+   - The CrewAI Approach to LLM Selection
+   - Quick Decision Framework
+   - Core Selection Framework
+   - Strategic Configuration Patterns
+   - High-capability reasoning model for strategic planning
+   - Creative model for content generation
+   - Efficient model for data processing
+   - Task Definition Framework
+   - Optimizing Agent Configuration for LLM Performance
+   - ✅ Specific role - clear LLM requirements
+   - Context amplifies model effectiveness
+   - This context enables Claude to perform like a domain expert
+   - Without it, even it would produce generic marketing advice
+   - Example: Technical Documentation Agent
+   - Practical Implementation Checklist
+   - Common CrewAI Model Selection Pitfalls
+   - Testing and Iteration Strategy
+   - Key Principles Summary
+   - Current Model Landscape (June 2025)
+   - Using Multimodal Agents
+   - Using Multimodal Agents
+   - Create a multimodal agent
+   - Create a task for image analysis
+   - Create and run the crew
+   - Create a multimodal agent for detailed analysis
+   - Create a task with specific analysis requirements
+   - Create and run the crew
+   - Overview
+   - Learn CrewAI
+   - Getting Started Guides
+   - Advanced Features
+   - Specialized Applications
+   - Learning Path Recommendations
+   - Best Practices
+   - Getting Help
+11. [Replay Tasks from Latest Crew Kickoff](./11-replay-tasks-from-latest-crew-kickoff.md)
+   - Introduction
+   - Conclusion
+   - Sequential Processes
+   - Introduction
+   - Sequential Process Overview
+   - Implementing the Sequential Process
+   - Define your agents
+   - Define your tasks
+   - Form the crew with a sequential process
+   - Execute the crew
+   - Accessing the type-safe output
+   - Advanced Features
+   - Best Practices for Sequential Processes
+   - Using Annotations in crew.py
+   - Introduction
+   - Available Annotations
+   - Usage Examples
+   - YAML Configuration
+   - Best Practices
+   - Arize Phoenix
+   - Arize Phoenix Integration
+   - Get Started
+   - Get your Phoenix Cloud credentials
+   - Get API keys for services
+   - Set environment variables
+   - setup monitoring for your crew
+   - Define your agents with roles and goals
+   - Create tasks for your agents
+   - Instantiate your crew with a sequential process
+   - Get your crew to work!
+   - Braintrust
+   - Braintrust Integration
+   - Get Started
+   - Get your Braintrust credentials
+   - Get API keys for services
+   - Set environment variables
+   - Run your crew
+   - eval_crew.py
+   - Datadog Integration
+   - Integrate Datadog with CrewAI
+   - What is Datadog LLM Observability?
+   - Getting Started
+   - crewai_agent.py
+   - References
+   - LangDB Integration
+   - Introduction
+   - Features
+   - Setup Instructions
+   - Quick Start Example
+   - Initialize LangDB before any CrewAI imports
+   - Define your agent
+   - Create a task
+   - Create and run the crew
+   - Complete Example: Research and Planning Agent
+   - LangDB credentials
+   - Additional API keys (optional)
+   - Viewing Traces in LangDB
+   - Troubleshooting
+   - Resources
+   - Next Steps
+   - Langfuse Integration
+   - Integrate Langfuse with CrewAI
+   - Get Started
+   - Get keys for your project from the project settings page: https://cloud.langfuse.com
+   - os.environ["LANGFUSE_HOST"] = "https://us.cloud.langfuse.com" # 🇺🇸 US region
+   - Your OpenAI key
+   - Verify connection
+   - References
+   - Langtrace Integration
+   - Langtrace Overview
+   - Setup Instructions
+   - Maxim Integration
+   - Maxim Overview
+   - Features
+   - Getting Started
+   - Create a `.env` file in your project root:
+   - Maxim API Configuration
+   - Instrument CrewAI with just one line
+   - Create your agent
+   - Define the task
+   - Configure and run the crew
+   - Viewing Your Traces
+   - Troubleshooting
+   - Resources
+   - MLflow Integration
+   - MLflow Overview
+   - Setup Instructions
+   - Neatlogs Integration
+   - Introduction
+   - Why use Neatlogs?
+   - Core Features
+   - Quick Setup with CrewAI
+   - Under the Hood
+   - Watch It Work
+   - Links & Support
+   - TL;DR
+   - OpenLIT Integration
+   - OpenLIT Overview
+   - Setup Instructions
+   - Opik Integration
+   - Opik Overview
+   - Setup
+   - Resources
+   - Overview
+   - Observability for CrewAI
+   - Why Observability Matters
+   - Available Observability Tools
+   - Key Observability Metrics
+   - Getting Started
+   - Best Practices
+   - Patronus AI Evaluation
+   - Patronus AI Evaluation
+   - Overview
+   - Key Features
+   - Evaluation Tools
+   - Installation
+   - Steps to Get Started
+   - Examples
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to generate and evaluate code
+   - Create and run the crew
+   - Initialize the tool with predefined criteria
+   - Define an agent that uses the tool
+   - Example task to generate code
+   - Create and run the crew
+   - Initialize the Patronus client
+   - Register a custom evaluator
+   - Initialize the tool with the custom evaluator
+   - Define an agent that uses the tool
+   - Example task to generate code
+   - Create and run the crew
+   - Parameters
+   - Usage
+   - Conclusion
+   - Portkey Integration
+   - Introduction
+   - Production Features
+   - Create LLM with fallback configuration
+   - Use this LLM configuration with your agents
+   - Create LLM with guardrails
+   - Create agent with guardrailed LLM
+   - Configure LLM with user tracking
+   - Create agent with tracked LLM
+   - Set up LLMs with different providers
+   - Choose which LLM to use for each agent based on your needs
+   - Set Up Enterprise Governance for CrewAI
+   - Frequently Asked Questions
+   - Resources
+12. [CrewAI Tracing](./12-crewai-tracing.md)
+   - CrewAI Built-in Tracing
+   - Prerequisites
+   - Setup Instructions
+   - Define your agents
+   - Create tasks for your agents
+   - Enable tracing in your crew
+   - Execute your crew
+   - Create and run the flow with tracing enabled
+   - Viewing Your Traces
+   - TrueFoundry Integration
+   - How TrueFoundry Integrates with CrewAI
+   - Configure LLM with TrueFoundry
+   - Create agents
+   - Create tasks
+   - Create and execute crew
+   - Tracing
+   - Initialize enhanced tracing
+   - Weave Integration
+   - Weave Overview
+   - Setup Instructions
+   - Features
+   - Resources
+   - Telemetry
+   - Telemetry
+   - Disable CrewAI telemetry only
+   - Disable all OpenTelemetry (including CrewAI)
+   - Apify Actors
+   - `ApifyActorsTool`
+   - Description
+   - Steps to get started
+   - Usage example
+   - Initialize the tool with an Apify Actor
+   - Run the tool with input parameters
+   - Process the results
+   - Configuration
+   - Resources
+   - Composio Tool
+   - `ComposioToolSet`
+   - Description
+   - Installation
+   - Example
+   - MultiOn Tool
+   - Overview
+   - Installation
+   - Steps to Get Started
+   - Example
+   - Initialize the tool
+   - Define an agent that uses the tool
+   - Example task to search and summarize news
+   - Create and run the crew
+   - Parameters
+   - Usage
+   - Example of using the tool with an agent
+   - Create a task for the agent
+   - Run the task
+   - Implementation Details
+   - Conclusion
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - Create automation tools
+   - Add to your agent
+   - **Integration Benefits**
+   - Zapier Actions Tool
+   - `ZapierActionsAdapter`
+   - Description
+   - Installation
+   - Environment Variables
+   - Example
+   - Notes & limits
+   - Notes
+   - Bedrock Invoke Agent Tool
+   - `BedrockInvokeAgentTool`
+   - Installation
+   - Requirements
+   - Usage
+   - Initialize the tool
+   - Create a CrewAI agent that uses the tool
+   - Create a task for the agent
+   - Create a crew with the agent
+   - Run the crew
+   - Tool Arguments
+   - Environment Variables
+   - Advanced Usage
+   - Initialize tools with session management
+   - Create agents for different stages
+   - Create tasks
+   - Create a crew with the agents and tasks
+   - Run the crew
+   - Use Cases
+   - CrewAI Run Automation Tool
+   - `InvokeCrewAIAutomationTool`
+   - Installation
+   - Requirements
+   - Usage
+   - Initialize the tool
+   - Create a CrewAI agent that uses the tool
+   - Create a task for the agent
+   - Create a crew with the agent
+   - Run the crew
+   - Tool Arguments
+   - Environment Variables
+   - Advanced Usage
+   - Define custom input schema
+   - Create tool with custom inputs
+   - Create an agent with the tool
+   - Create and execute a task with custom parameters
+   - Initialize different automation tools
+   - Create specialized agents
+   - Create sequential tasks
+   - Create a crew with sequential processing
+   - Use Cases
+   - Custom Input Schema
+   - Error Handling
+   - API Endpoints
+   - Notes
+   - Overview
+   - **Available Tools**
+   - **Common Use Cases**
+   - **Quick Start Example**
+   - External automation
+   - Managed agent on Bedrock
+   - **Best Practices**
+   - GET /inputs
+   - Introduction
+   - CrewAI AMP API
+   - Quick Start
+   - Authentication
+   - Base URL
+   - Typical Workflow
+   - Error Handling
+   - Interactive Testing
+   - Need Help?
+   - POST /kickoff
+   - POST /resume
+   - GET /status/{kickoff_id}
+   - Changelog
+   - HITL Workflows
+   - Setting Up HITL Workflows
+   - Best Practices
+   - Common Use Cases
+   - React Component Export
+   - Exporting a React Component
+   - Setting Up Your React Environment
+   - Customization
+   - Next Steps
+13. [Team Management](./13-team-management.md)
+   - Inviting Team Members
+   - Adding Roles
+   - Important Notes
+   - Tool Repository
+   - Overview
+   - Prerequisites
+   - Installing Tools
+   - Adding other packages after installing a tool
+   - Creating and Publishing Tools
+   - Updating Tools
+   - Deleting Tools
+   - Security Checks
+   - Webhook Automation
+   - Setting Up Webhooks
+   - Webhook Output Examples
+   - FAQs
+   - CrewAI Cookbooks
+   - Quickstarts & Demos
+   - CrewAI Examples
+   - Crews
+   - Flows
+   - Integrations
+   - Notebooks
+
+---
+
+[← Back to CrewAI README](../README.md)
