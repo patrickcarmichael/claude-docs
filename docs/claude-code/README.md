@@ -110,7 +110,12 @@ Step-by-step tutorials and advanced patterns.
 
 ## 📄 Complete Documentation
 
-**[llms-full.txt](./llms-full.txt)** (532KB) - Complete documentation in LLM-optimized format | **[Chunked Version](./chunked/index.md)** - Split into 9 manageable sections
+**[llms-full.txt](./llms-full.txt)** (532KB) - Complete documentation in LLM-optimized format
+
+**Available Formats:**
+- **[Formatted Version](./formatted/index.md)** - Beautifully formatted markdown with YAML front matter
+- **[Chunked Version](./chunked/index.md)** - Split into 9 manageable sections
+- **[Organized Docs](#-documentation-sections)** - Topic-based structure (above)
 
 Perfect for:
 - Feeding to AI coding assistants
@@ -118,11 +123,10 @@ Perfect for:
 - Training custom models
 - Offline reference
 
-**Chunked Version Benefits:**
-- 9 logical sections (~60KB each)
-- Easy navigation between topics
-- Optimized for AI consumption with size limits
-- Each chunk is a complete, readable unit
+**Format Benefits:**
+- **Formatted**: Clean markdown, YAML metadata, easy reading
+- **Chunked**: 9 logical sections (~60KB each), AI-optimized
+- **Organized**: Topic-based navigation, quick reference
 
 ---
 

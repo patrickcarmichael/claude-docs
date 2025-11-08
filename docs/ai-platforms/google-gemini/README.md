@@ -1,5 +1,8 @@
 # Google Gemini
 
+📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked](./chunked/index.md) | ✨ [Formatted](./formatted/index.md)
+
+
 **Google's Flagship Multimodal LLM Platform**
 
 Google Gemini is a state-of-the-art multimodal AI platform that processes text, images, video, and audio with enterprise-grade capabilities. Available through multiple interfaces including Google AI Studio (free), the Gemini API, Vertex AI (enterprise), and on-device deployment.

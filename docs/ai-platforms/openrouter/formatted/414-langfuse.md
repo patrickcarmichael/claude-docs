@@ -1,0 +1,14 @@
+---
+title: "OpenRouter Documentation"
+description: "Formatted documentation for OpenRouter"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Langfuse
+
+> Integrate OpenRouter using Langfuse for observability and tracing. Complete guide for Langfuse integration with OpenRouter for Python applications.
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

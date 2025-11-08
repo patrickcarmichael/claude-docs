@@ -1,0 +1,19 @@
+---
+title: "Fireworks Documentation"
+description: "Formatted documentation for Fireworks"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Disconnect Environment
+
+Source: https://docs.fireworks.ai/api-reference-dlde/disconnect-environment
+
+post /v1/accounts/{account_id}/environments/{environment_id}:disconnect
+Disconnects the environment from the node pool. Returns an error
+if the environment is not connected to a node pool.
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

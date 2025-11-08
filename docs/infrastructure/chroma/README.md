@@ -220,7 +220,10 @@ results = collection.query(
 
 ## Documentation
 
-Full documentation available at: [llms-full.txt](./llms-full.txt)
+📄 **Documentation Formats:**
+- **[Formatted Documentation](./formatted/index.md)** - Organized markdown with navigation
+- **[Complete Guide](./formatted/documentation.md)** - Full documentation in single file
+- **[Raw Text](./llms-full.txt)** - Original source documentation
 
 Includes:
 - Detailed API reference

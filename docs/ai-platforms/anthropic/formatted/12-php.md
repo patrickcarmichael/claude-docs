@@ -1,0 +1,27 @@
+---
+title: "Anthropic Documentation"
+description: "Formatted documentation for Anthropic"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## PHP
+
+[PHP library GitHub repo](https://github.com/anthropics/anthropic-sdk-php)
+
+>   **ℹ️ Info**
+>
+> The PHP SDK is currently in beta.
+
+**Requirements:** PHP 8.1.0 or higher
+
+**Installation:**
+```bash
+composer require "anthropic-ai/sdk 0.3.0"
+```
+
+***
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

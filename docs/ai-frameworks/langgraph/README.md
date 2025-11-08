@@ -10,7 +10,7 @@ LangGraph is a framework for building stateful, multi-actor applications with LL
 - **Best For**: Complex agent workflows, multi-agent systems, stateful applications
 - **Philosophy**: Graph-based workflows, state management, persistence
 
-📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked Version](./chunked/index.md)
+📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked](./chunked/index.md) | ✨ [Formatted](./formatted/index.md)
 
 ## Key Features
 

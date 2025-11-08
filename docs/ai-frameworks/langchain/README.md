@@ -10,7 +10,7 @@ LangChain is the most widely-used framework for building applications powered by
 - **Best For**: General LLM applications, prototyping, agent workflows
 - **Philosophy**: Composable building blocks, extensive integrations
 
-📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked Version](./chunked/index.md)
+📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked](./chunked/index.md) | ✨ [Formatted](./formatted/index.md)
 
 ## Official Resources
 

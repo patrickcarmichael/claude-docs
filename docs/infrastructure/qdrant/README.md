@@ -193,7 +193,10 @@ pip install qdrant-client[fastembed]
 
 ## Key Resources
 
-📄 **Full Documentation**: [llms-full.txt](./llms-full.txt)
+📄 **Documentation Formats:**
+- **[Formatted Documentation](./formatted/index.md)** - Organized markdown with navigation
+- **[Complete Guide](./formatted/documentation.md)** - Full documentation in single file
+- **[Raw Text](./llms-full.txt)** - Original source documentation
 
 **Official Links:**
 - Website: https://qdrant.tech

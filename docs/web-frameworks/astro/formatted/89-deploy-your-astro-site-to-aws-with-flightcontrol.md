@@ -1,0 +1,41 @@
+---
+title: "Deploy your Astro Site to AWS with Flightcontrol"
+section: 89
+---
+
+# Deploy your Astro Site to AWS with Flightcontrol
+
+> How to deploy your Astro site to AWS with Flightcontrol
+
+You can deploy an Astro site using [Flightcontrol](https://www.flightcontrol.dev?ref=astro), which provides fully-automated deployments to your AWS account.
+
+Supports both static and SSR Astro sites.
+
+## How to Deploy
+
+[Section titled “How to Deploy”](#how-to-deploy)
+
+1. Create a Flightcontrol account at [app.flightcontrol.dev/signup](https://app.flightcontrol.dev/signup?ref=astro)
+
+2. Go to [app.flightcontrol.dev/projects/new/1](https://app.flightcontrol.dev/projects/new/1)
+
+3. Connect your GitHub account and select your repo
+
+4. Select your desired “Config Type”:
+
+   * `GUI` (all config managed through Flightcontrol dashboard) where you will select the `Astro Static` or `Astro SSR` preset
+   * `flightcontrol.json` (“infrastructure as code” option where all config is in your repo) where you will select an Astro example config, then add it to your codebase as `flightcontrol.json`
+
+5. Adjust any configuration as needed
+
+6. Click “Create Project” and complete any required steps (like linking your AWS account).
+
+### SSR Setup
+
+[Section titled “SSR Setup”](#ssr-setup)
+
+To deploy with SSR support, make sure you first set up the [`@astrojs/node`](/en/guides/integrations-guide/node/) adapter. Then, follow the steps above, choosing the appropriate configurations for Astro SSR.
+
+---
+
+[← Previous](88-deploy-your-astro-site-to-fleek.md) | [Index](index.md) | [Next →](index.md)

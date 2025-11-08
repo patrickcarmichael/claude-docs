@@ -1,0 +1,27 @@
+---
+title: "Crewai: Installation"
+description: "Installation section of Crewai documentation"
+source: "https://docs.crewai.com/en/concepts/agents"
+last_updated: "2025-11-08"
+---
+
+## Installation
+
+
+Install the crewai\_tools package to use the `FileWriterTool` in your projects:
+
+```shell  theme={null}
+pip install 'crewai[tools]'
+```
+
+---
+
+## Navigation
+
+- [📑 Back to Index](./index.md)
+- [📄 Full Documentation](./documentation.md)
+- [📝 Original Source](../llms-full.txt)
+
+**Previous:** [← Description](./949-description.md)
+
+**Next:** [Example →](./951-example.md)

@@ -1,0 +1,63 @@
+---
+title: "Crewai: Quickstarts & Demos"
+description: "Quickstarts & Demos section of Crewai documentation"
+source: "https://docs.crewai.com/en/concepts/agents"
+last_updated: "2025-11-08"
+---
+
+## Quickstarts & Demos
+
+
+<CardGroup cols={3}>
+  <Card title="Collaboration" icon="people-arrows" href="https://github.com/crewAIInc/crewAI-quickstarts/blob/main/Collaboration/crewai_collaboration.ipynb">
+    Coordinate multiple agents on shared tasks. Includes notebook with end-to-end collaboration pattern.
+  </Card>
+
+  <Card title="Planning" icon="timeline" href="https://github.com/crewAIInc/crewAI-quickstarts/blob/main/Planning/crewai_planning.ipynb">
+    Teach agents to reason about multi-step plans before execution using the planning toolkit.
+  </Card>
+
+  <Card title="Reasoning" icon="lightbulb" href="https://github.com/crewAIInc/crewAI-quickstarts/blob/main/Reasoning/crewai_reasoning.ipynb">
+    Explore self-reflection loops, critique prompts, and structured thinking patterns.
+  </Card>
+</CardGroup>
+
+<CardGroup cols={3}>
+  <Card title="Structured Guardrails" icon="shield-check" href="https://github.com/crewAIInc/crewAI-quickstarts/blob/main/Guardrails/task_guardrails.ipynb">
+    Apply task-level guardrails with retries, validation functions, and safe fallbacks.
+  </Card>
+
+  <Card title="Gemini Search & Grounding" icon="magnifying-glass" href="https://github.com/crewAIInc/crewAI-quickstarts/blob/main/Custom%20LLM/gemini_search_grounding_crewai.ipynb">
+    Connect CrewAI to Gemini with search grounding for factual, citation-rich outputs.
+  </Card>
+
+  <Card title="Gemini Video Summaries" icon="video" href="https://github.com/crewAIInc/crewAI-quickstarts/blob/main/Custom%20LLM/summarize_video_gemini_crewai.ipynb">
+    Generate video recaps using Gemini multimodal LLM and CrewAI orchestration.
+  </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <Card title="Browse Quickstarts" icon="bolt" href="https://github.com/crewAIInc/crewAI-quickstarts">
+    View all notebooks and feature demos showcasing specific CrewAI capabilities.
+  </Card>
+
+  <Card title="Request a cookbook" icon="message-plus" href="https://community.crewai.com">
+    Missing a pattern? Drop a request in the community forum and we’ll expand the library.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Use Cookbooks to learn a pattern quickly, then jump to Full Examples for production‑grade implementations.
+</Tip>
+
+---
+
+## Navigation
+
+- [📑 Back to Index](./index.md)
+- [📄 Full Documentation](./documentation.md)
+- [📝 Original Source](../llms-full.txt)
+
+**Previous:** [← CrewAI Cookbooks](./2437-crewai-cookbooks.md)
+
+**Next:** [CrewAI Examples →](./2439-crewai-examples.md)

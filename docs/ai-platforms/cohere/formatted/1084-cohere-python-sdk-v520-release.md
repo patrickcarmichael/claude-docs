@@ -1,0 +1,24 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Cohere Python SDK v5.2.0 release
+
+> Stay up to date with our Python SDK update, including local tokenizer defaults and new required fields.
+
+We've released an additional update for our Python SDK! Here are the highlights.
+
+* The tokenize and detokenize functions in the Python SDK now default to using a *local* tokenizer.
+* When using the local tokenizer, the response will not include `token_strings`, but users can revert to using the hosted tokenizer by specifying `offline=False`.
+* Also, `model` will now be a required field.
+* For more information, see the guide for [tokens and tokenizers](/docs/tokens-and-tokenizers).
+
+<br />
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

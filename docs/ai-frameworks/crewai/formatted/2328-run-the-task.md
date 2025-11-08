@@ -1,0 +1,26 @@
+---
+title: "Crewai: Run the task"
+description: "Run the task section of Crewai documentation"
+source: "https://docs.crewai.com/en/concepts/agents"
+last_updated: "2025-11-08"
+---
+
+# Run the task
+
+crew = Crew(agents=[browser_agent], tasks=[search_task])
+result = crew.kickoff()
+```
+
+If the status returned is `CONTINUE`, the agent should be instructed to reissue the same instruction to continue execution.
+
+---
+
+## Navigation
+
+- [📑 Back to Index](./index.md)
+- [📄 Full Documentation](./documentation.md)
+- [📝 Original Source](../llms-full.txt)
+
+**Previous:** [← Create a task for the agent](./2327-create-a-task-for-the-agent.md)
+
+**Next:** [Implementation Details →](./2329-implementation-details.md)

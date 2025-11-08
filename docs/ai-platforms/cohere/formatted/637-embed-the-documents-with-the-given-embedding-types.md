@@ -1,0 +1,19 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Embed the documents with the given embedding types
+
+doc_emb = co.embed(
+    model="embed-v4.0",
+    embedding_types=["float", "int8"],
+    input_type="search_document",
+    texts=[doc["text"] for doc in documents],
+).embeddings
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

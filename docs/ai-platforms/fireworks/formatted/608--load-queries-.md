@@ -1,0 +1,18 @@
+---
+title: "Fireworks Documentation"
+description: "Formatted documentation for Fireworks"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## --- Load queries ---
+
+with open(QUERIES_FILE_PATH, "r") as f:
+    queries = json.load(f).get("queries", [])
+
+total_q = len(queries)
+print(f"Total queries: {total_q}")
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

@@ -1,0 +1,22 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Embed the query
+
+query_emb = co.embed(
+    model="embed-v4.0",
+    embedding_types=["float", "int8"],
+    input_type="search_query",
+    texts=[query],
+).embeddings
+```
+Here are the search results of using the `float` embeddings (same as the earlier example).
+```python PYTHON
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

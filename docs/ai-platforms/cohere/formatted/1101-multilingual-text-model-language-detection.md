@@ -1,0 +1,23 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Multilingual Text Model + Language Detection
+
+> Cohere's multilingual model now supports semantic search across 100 languages with a single index.
+
+**\[NOTE: `co.detect_language()` is deprecated.]**
+
+Cohere's multilingual text understanding model is now available! The `multilingual-22-12` model can be used to semantically search within a single language, as well as across languages. Compared to keyword search, where you often need separate tokenizers and indices to handle different languages, the deployment of the multilingual model for search is trivial: no language-specific handling is needed — everything can be done by a single model within a single index.
+
+In addition to our new model, you can now detect the language of a data source using `co.detect_language()` endpoint.
+
+For more information, see our [multilingual docs](/docs/multilingual-language-models).
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

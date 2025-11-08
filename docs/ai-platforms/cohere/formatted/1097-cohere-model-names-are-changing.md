@@ -1,0 +1,35 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Cohere Model Names Are Changing!
+
+> We've updated our model names for simplicity and consistency, and old names will work for now.
+
+We are updating the names of our models to bring consistency and simplicity to our product offerings. As of today, you will be able to call Cohere’s models via our API and SDK with the new model names, and all of our documentation has been updated to reflect the new naming convention.
+
+These changes are backwards compatible, so you can also continue to call our models with the **Previous Names** found in the table below until further notice.
+
+| Model Type | Previous Name          | New Name                 | Endpoint    |
+| ---------- | ---------------------- | ------------------------ | ----------- |
+| Generative | command-xlarge         | command                  | co.generate |
+| Generative | command-medium         | command-light            | co.generate |
+| Generative | command-xlarge-nightly | command-nightly          | co.generate |
+| Generative | command-medium-nightly | command-light-nightly    | co.generate |
+| Generative | xlarge                 | base                     | co.generate |
+| Generative | medium                 | base-light               | co.generate |
+| Embeddings | large                  | embed-english-v2.0       | co.embed    |
+| Embeddings | small                  | embed-english-light-v2.0 | co.embed    |
+| Embeddings | multilingual-22-12     | embed-multilingual-v2.0  | co.embed    |
+
+See the latest information about our models here: [/docs/models](/docs/models)
+
+If you experience any issues in accessing our models, please reach out to [support@cohere.com](mailto:support@cohere.com).
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

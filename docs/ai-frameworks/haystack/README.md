@@ -10,7 +10,7 @@ Haystack is an end-to-end framework for building production-ready LLM applicatio
 - **Best For**: Scaled document intelligence, RAG systems, enterprise search
 - **Philosophy**: Vendor-neutral, component-based pipeline architecture
 
-📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked Version](./chunked/index.md)
+📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked](./chunked/index.md) | ✨ [Formatted](./formatted/index.md)
 
 ## Key Features
 

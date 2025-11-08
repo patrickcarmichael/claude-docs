@@ -1,0 +1,88 @@
+---
+title: "Audit Secret"
+source: "https://docs.cursor.com/id/cli/cookbook/secret-audit"
+language: "id"
+language_name: "Indonesian"
+---
+
+# Audit Secret
+Source: https://docs.cursor.com/id/cli/cookbook/secret-audit
+
+Audit secret untuk sebuah repository menggunakan Cursor CLI di GitHub Actions
+
+Audit repository-mu untuk kerentanan keamanan dan kebocoran secret pakai Cursor CLI. Workflow ini memindai potensi secret, mendeteksi pola workflow berisiko, dan mengusulkan perbaikan keamanan.
+
+<CodeGroup>
+  ```yaml auto-secret-audit.yml theme={null}
+  name: Secrets Audit
+
+  on:
+    schedule:
+      - cron: "0 4 * * *"
+    workflow_dispatch:
+
+  permissions:
+    contents: write
+    pull-requests: write
+    actions: read
+
+  jobs:
+    secrets-audit:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+
+        - name: Install Cursor CLI
+          run: |
+            curl https://cursor.com/install -fsS | bash
+            echo "$HOME/.cursor/bin" >> $GITHUB_PATH
+
+        - name: Configure git identity
+          run: |
+            git config user.name "Cursor Agent"
+            git config user.email "cursoragent@cursor.com"
+
+        - name: Scan and propose hardening
+          env:
+            CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+            MODEL: gpt-5
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            BRANCH_PREFIX: audit
+          run: |
+            cursor-agent -p "You are operating in a GitHub Actions runner.
+
+            The GitHub CLI is available as `gh` and authenticated via `GH_TOKEN`. Git is available. You have write access to repository contents and can comment on pull requests, but you must not create or edit PRs directly.
+
+            # Context:
+            - Repo: ${{ github.repository }}
+             - Hardening Branch Prefix: ${{ env.BRANCH_PREFIX }}
+
+            # Goal:
+            - Perform a repository secrets exposure and workflow hardening audit on a schedule, and propose minimal safe fixes.
+
+            # Requirements:
+            1) Scan for potential secrets in tracked files and recent history; support allowlist patterns if present (e.g., .gitleaks.toml).
+            2) Detect risky workflow patterns: unpinned actions, overbroad permissions, unsafe pull_request_target usage, secrets in forked PR contexts, deprecated insecure commands, missing permissions blocks.
+            3) Maintain a persistent branch for this run using the Hardening Branch Prefix from Context. Create it if missing, update it otherwise, and push changes to origin.
+            4) Propose minimal edits: redact literals where safe, add ignore rules, pin actions to SHA, reduce permissions, add guardrails to workflows, and add a SECURITY_LOG.md summarizing changes and remediation guidance.
+            5) Push to origin.
+            6) If there is at least one open PR in the repo, post or update a single natural-language comment (1–2 sentences) on the most recently updated open PR that briefly explains the hardening changes and includes an inline compare link to quick-create a PR.
+            7) Avoid duplicate comments; update an existing bot comment if present. If no changes or no open PRs, post nothing.
+
+            # Inputs and conventions:
+            - Use `gh` to list PRs and to post comments. Avoid duplicate comments.
+
+            # Deliverables when updates occur:
+             - Pushed commits to the persistent hardening branch for this run.
+            - A single natural-language PR comment with the compare link above (only if an open PR exists).
+            " --force --model "$MODEL" --output-format=text
+
+  ```
+</CodeGroup>
+
+---
+
+← Previous: [Perbaiki Kegagalan CI](./perbaiki-kegagalan-ci.md) | [Index](./index.md) | Next: [Translate Keys](./translate-keys.md) →

@@ -1,0 +1,34 @@
+---
+title: "Anthropic Documentation"
+description: "Formatted documentation for Anthropic"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Java
+
+[Java library GitHub repo](https://github.com/anthropics/anthropic-sdk-java)
+
+**Requirements:** Java 8 or later
+
+**Installation:**
+
+Gradle:
+```gradle
+implementation("com.anthropic:anthropic-java:2.10.0")
+```
+
+Maven:
+```xml
+<dependency>
+    <groupId>com.anthropic</groupId>
+    <artifactId>anthropic-java</artifactId>
+    <version>2.10.0</version>
+</dependency>
+```
+
+***
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

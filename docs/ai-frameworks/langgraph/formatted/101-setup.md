@@ -1,0 +1,29 @@
+---
+title: "Langgraph: Setup"
+description: "Setup section of Langgraph documentation"
+source: "https://langgraph.com"
+last_updated: "2025-11-08"
+---
+
+## Setup
+
+
+```bash
+pip install -U langgraph
+```
+
+!!! tip "Set up LangSmith for LangGraph development"
+
+    Sign up for [LangSmith](https://smith.langchain.com) to quickly spot issues and improve the performance of your LangGraph projects. LangSmith lets you use trace data to debug, test, and monitor your LLM apps built with LangGraph — read more about how to get started [here](https://docs.smith.langchain.com).
+
+---
+
+## Navigation
+
+- [📑 Back to Index](./index.md)
+- [📄 Full Documentation](./documentation.md)
+- [📝 Original Source](../llms-full.txt)
+
+**Previous:** [← Use subgraphs](./100-use-subgraphs.md)
+
+**Next:** [Shared state schemas →](./102-shared-state-schemas.md)

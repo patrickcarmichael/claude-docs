@@ -1,0 +1,19 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Cohere Python SDK v5.0.0 release
+
+> Stay up-to-date with our latest Python SDK release and learn about deprecated functions and migration instructions.
+
+With the release of our latest Python SDK, there are a number of functions that are no longer supported, including `create_custom_models`.
+
+For more granular instructions on upgrading to the new SDK, and what that will mean for your Cohere integrations, see the comprehensive [migration guide](https://github.com/cohere-ai/cohere-python/blob/main/4.0.0-5.0.0-migration-guide.md).
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

@@ -11,7 +11,7 @@ The Model Context Protocol (MCP) is an open protocol that standardizes how appli
 - **Best For**: Connecting LLMs to external data, building AI integrations
 - **Philosophy**: Open standard, secure context sharing, extensible integrations
 
-📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked Version](./chunked/index.md)
+📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked](./chunked/index.md) | ✨ [Formatted](./formatted/index.md)
 
 ## Key Concepts
 

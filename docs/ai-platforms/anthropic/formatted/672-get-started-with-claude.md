@@ -1,0 +1,16 @@
+---
+title: "Anthropic Documentation"
+description: "Formatted documentation for Anthropic"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Get started with Claude
+
+Source: https://docs.claude.com/en/docs/get-started
+
+Make your first API call to Claude and build a simple web search assistant
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

@@ -335,7 +335,10 @@ const result = await client.data.creator()
 
 ## Full Documentation
 
-📄 [Complete Weaviate Documentation](./llms-full.txt) - Comprehensive reference including API details, advanced features, and best practices.
+📄 **Documentation Formats:**
+- **[Formatted Documentation](./formatted/index.md)** - Organized markdown with navigation
+- **[Complete Guide](./formatted/documentation.md)** - Full documentation in single file
+- **[Raw Text](./llms-full.txt)** - Original source documentation
 
 ---
 

@@ -1,0 +1,34 @@
+---
+title: "Secrets management for your Community Cloud app"
+source: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management
+section: 303
+---
+
+# Secrets management for your Community Cloud app
+
+Source: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management
+
+
+## Introduction
+
+If you are [connecting to data sources](/develop/tutorials/databases), you will likely need to handle credentials or secrets. Storing unencrypted secrets in a git repository is a bad practice. If your application needs access to sensitive credentials, the recommended solution is to store those credentials in a file that is not committed to the repository and to pass them as environment variables.
+
+## How to use secrets management
+
+Community Cloud lets you save your secrets within your app's settings. When developing locally, you can use `st.secrets` in your code to read secrets from a `.streamlit/secrets.toml` file. However, this `secrets.toml` file should never be committed to your repository. Instead, when you deploy your app, you can paste the contents of your `secrets.toml` file into the "**Advanced settings**" dialog. You can update your secrets at any time through your app's settings in your workspace.
+
+### Prerequisites
+
+- You should understand how to use `st.secrets` and `secrets.toml`. See [Secrets management](/develop/concepts/connections/secrets-management).
+
+### Advanced settings
+
+While deploying your app, you can access "**Advanced settings**" to set your secrets. After your app is deployed, you can view or update your secrets through the app's settings. The deployment workflow is fully described on the next page, but the "**Advanced settings**" dialog looks like this:
+
+<div>{{ maxWidth: '70%', margin: 'auto' }}&gt;
+<Image alt="Advanced settings for deploying your app" src="/images/streamlit-community-cloud/deploy-an-app-advanced.png"/>
+</div>
+
+---
+
+[← Previous](302-app-dependencies-for-your-community-cloud-app.md) | [Index](index.md) | [Next →](index.md)

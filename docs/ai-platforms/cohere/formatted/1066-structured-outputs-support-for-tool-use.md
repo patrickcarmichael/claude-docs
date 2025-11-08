@@ -1,0 +1,23 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Structured Outputs support for tool use
+
+> Structured Outputs now supports both JSON and tool use scenarios.
+
+Today, we're pleased to announce that we have added Structured Outputs support for tool use in the Chat API.
+
+In addition to supporting Structured Outputs with JSON generation via the `response_format` parameter, Structured Outputs will be available with Tools as well via the `strict_tools` parameter.
+
+Setting `strict_tools` to `true` ensures that tool calls will follow the  provided tool schema exactly. This means the tool calls are guaranteed to adhere to the tool names, parameter names, parameter data types, and required parameters, without the risk of hallucinations.
+
+See the [Structured Outputs documentation](https://docs.cohere.com/v2/docs/structured-outputs#structured-outputs-tools) to learn more.
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

@@ -10,7 +10,7 @@ CrewAI is a cutting-edge framework for building multi-agent AI systems where age
 - **Best For**: Multi-agent systems, role-based workflows, collaborative AI
 - **Philosophy**: Crew-based orchestration, role specialization, collaborative intelligence
 
-📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked Version](./chunked/index.md)
+📄 [Full Documentation](./llms-full.txt) | 📑 [Chunked](./chunked/index.md) | ✨ [Formatted](./formatted/index.md)
 
 ## Key Features
 

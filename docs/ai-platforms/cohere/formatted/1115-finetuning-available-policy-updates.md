@@ -1,0 +1,23 @@
+---
+title: "Cohere Documentation"
+description: "Formatted documentation for Cohere"
+source: "llms-full.txt"
+last_updated: "2025-11-08"
+---
+
+## Finetuning Available + Policy Updates
+
+> Fine-tune models with your own data and leverage updated policies for powerful NLP solutions.
+
+**Finetuning is Generally Available**
+
+You no longer need to wait for Full Access approval to build your own custom finetuned generation or representation model. Upload your dataset and start seeing even better performance for your specific task.
+
+**Policy Updates**
+
+The Cohere team continues to be focused on improving our products and features to enable our customers to build powerful NLP solutions. To help reflect some of the changes in our product development and research process, we have updated our [Terms of Use](https://cohere.ai/terms-of-use), [Privacy Policy](https://cohere.ai/privacy), and click-through [SaaS Agreement](https://cohere.ai/saas-agreement). Please carefully read and review these updates. By continuing to use Cohere’s services, you acknowledge that you have read, understood, and consent to all of the changes. If you have any questions or concerns about these updates, please contact us at [support@cohere.ai](mailto:support@cohere.ai).
+
+
+---
+
+**📚 [Back to Index](./index.md)** | **📄 [Full Version](./documentation.md)** | **🔗 [Original](../llms-full.txt)**

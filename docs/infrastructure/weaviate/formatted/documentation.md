@@ -1,0 +1,456 @@
+---
+title: Weaviate Documentation
+description: Complete documentation for Weaviate AI-native vector database
+service: weaviate
+version: 1.0
+last_updated: 2025-11-08
+---
+
+# Weaviate: AI-Native Vector Database Documentation
+
+## Overview
+
+Weaviate is an open-source, AI-native vector database that stores both data objects and their vector embeddings together to enable advanced semantic capabilities. It serves as a backend for AI applications requiring semantic search, retrieval-augmented generation (RAG), and agent-driven workflows.
+
+## Core Definition
+
+Weaviate is a "cloud-native vector database with built-in AI and search capabilities," designed specifically for AI and machine learning applications. By integrating vector storage with traditional data storage, Weaviate enables semantic search and intelligent query capabilities.
+
+## Key Technical Features
+
+### Semantic and Hybrid Search
+
+- **Semantic Search**: Compare vector meanings rather than just keywords to find relevant results
+- **Hybrid Search**: Combine semantic search with keyword/BM25 matching for optimal results
+- **Advanced Filtering**: Filter vectors based on metadata and properties before similarity search
+- **Flexible Querying**: GraphQL API for intuitive data queries and complex operations
+
+### Retrieval Augmented Generation (RAG)
+
+Weaviate functions as a backend for RAG workflows by:
+
+- Retrieving contextual information through vector similarity search
+- Providing relevant context to language models for improved responses
+- Supporting knowledge integration with LLMs for accurate, context-aware outputs
+
+### Agent-Driven Workflows
+
+- Flexible API and AI model integrations suitable for intelligent agents
+- Leverage semantic insights for decision-making and action triggering
+- Support for complex multi-step workflows with semantic understanding
+
+### GraphQL API
+
+- Native GraphQL support for intuitive data queries
+- Efficient data retrieval with minimized over-fetching
+- Support for complex queries and mutations
+- Built-in aggregations and analytics
+
+### Modularity
+
+- **Pluggable Vectorizers**: Use different embedding models (OpenAI, Cohere, HuggingFace, etc.)
+- **Custom Modules**: Extend functionality with custom modules
+- **Integration Support**: Native integrations with major AI platforms and embedding providers
+- **Flexible Architecture**: Adapt to various deployment scenarios
+
+### Advanced Filtering Capabilities
+
+- **Metadata Filtering**: Filter objects based on stored metadata before vector search
+- **Conditional Queries**: Complex WHERE clauses combined with vector similarity
+- **Property-Based Filtering**: Search within specific properties or fields
+- **Range Queries**: Numeric and date range filtering support
+
+## Deployment Options
+
+### Weaviate Cloud
+
+- Fully managed, serverless deployment
+- Production-ready infrastructure
+- Automatic scaling and backup
+- Global edge locations
+- Enterprise-grade security and SLAs
+
+### Docker
+
+- Local development and testing
+- Quick setup with docker-compose
+- Ideal for prototyping and learning
+- Easy environment configuration
+
+### Kubernetes
+
+- Scalable, self-managed deployment
+- Production-grade reliability
+- Custom configurations and optimization
+- Enterprise deployment support
+
+### Embedded Weaviate
+
+- Python and JavaScript libraries
+- Quick evaluation and prototyping
+- In-process database for testing
+- No infrastructure setup required
+
+## Architecture & Ecosystem
+
+### Core Components
+
+1. **Database Engine**: Vector storage and retrieval with metadata support
+2. **GraphQL API**: Primary interface for queries and mutations
+3. **REST API**: Alternative interface for programmatic access
+4. **Embedding Inference**: Built-in vectorization capabilities
+5. **Reranking Module**: Optional semantic reranking of results
+
+### Ecosystem
+
+- **Weaviate Cloud**: Managed deployment and scaling
+- **Weaviate Agents**: Pre-built agentic services for common tasks
+- **Weaviate Academy**: Learning platform for tutorials and courses
+- **Client Libraries**: Python, TypeScript/JavaScript, Go, and Java SDKs
+- **Integration Partners**: Major AI platforms, embedding providers, and tools
+
+## Vector Management
+
+### Vectorization
+
+- **Built-in Vectorizers**: OpenAI, Cohere, HuggingFace, Google PaLM, Ollama
+- **Custom Embeddings**: Support for external embedding models
+- **Batch Operations**: Efficient bulk vectorization of data
+- **Model Updates**: Change embedding models without re-ingesting data
+
+### Data Organization
+
+- **Collections**: Group related objects together
+- **Multi-Tenancy**: Isolate data for different clients/users
+- **Compression**: Optimize storage with vector quantization
+- **Backup & Recovery**: Automated backups and recovery options
+
+## Search & Retrieval
+
+### Search Types
+
+1. **Vector/Semantic Search**: Find similar items based on vector proximity
+2. **Keyword Search**: Traditional BM25 search over text
+3. **Hybrid Search**: Combine semantic and keyword search with weights
+4. **Image Search**: Semantic search across images (with vision embeddings)
+
+### Retrieval Features
+
+- **Limit & Offset**: Pagination of search results
+- **Distance Metrics**: Cosine, Euclidean, Manhattan, Hamming
+- **Search Limits**: Configure result counts and search depth
+- **Explain Scores**: Understand why results were returned
+
+## Use Cases
+
+### Retrieval Augmented Generation (RAG)
+
+- Semantic search for relevant context
+- Multi-document question answering
+- Knowledge-enhanced LLM responses
+- Fact-grounded generation
+
+### Semantic Search
+
+- Document and content search
+- Product catalog search
+- Job and talent matching
+- Recommendation systems
+
+### Knowledge Graphs
+
+- Relationship-aware semantic search
+- Entity linking and disambiguation
+- Graph-based reasoning
+- Knowledge base integration
+
+### Classification & Clustering
+
+- Zero-shot classification
+- Semantic similarity grouping
+- Anomaly detection
+- Pattern discovery
+
+### Personalization
+
+- User preference learning
+- Content recommendations
+- Personalized search results
+- User behavior analysis
+
+## Integration Capabilities
+
+### Language & Frameworks
+
+- **LangChain**: Full integration support for RAG pipelines
+- **LlamaIndex**: Vector store integration for data indexing
+- **Semantic Kernel**: Microsoft AI framework support
+- **Custom Frameworks**: REST and GraphQL APIs for any framework
+
+### Embedding Providers
+
+- **OpenAI**: GPT embeddings integration
+- **Cohere**: Embedding and reranking models
+- **HuggingFace**: Open-source embedding models
+- **Google**: PaLM embeddings
+- **Ollama**: Local model embeddings
+
+### LLM Providers
+
+- **Anthropic**: LLM integration for retrieval
+- **OpenAI**: GPT models and embeddings
+- **Google**: Vertex AI and PaLM models
+- **Cohere**: Command models and embeddings
+- **Open Source**: Ollama and other local models
+
+### Vector Databases
+
+- **Comparison Point**: Weaviate vs Pinecone, Milvus, Qdrant, Chroma
+- **Unique Features**: GraphQL API, modularity, hybrid search
+- **Advantages**: Self-hosted option, transparent architecture, no vendor lock-in
+
+## Configuration & Customization
+
+### Schema Design
+
+- Define collections with properties
+- Set vectorizer configurations
+- Configure distance metrics
+- Set indexing strategies
+
+### Performance Tuning
+
+- Vector caching strategies
+- Batch size optimization
+- Query performance monitoring
+- Resource allocation
+
+### Security
+
+- Authentication and authorization
+- API key management
+- Role-based access control
+- Data encryption options
+
+## Getting Started
+
+### Quick Start
+
+1. Deploy Weaviate (Cloud, Docker, or Embedded)
+2. Define schema and collections
+3. Load data with embeddings
+4. Execute queries via GraphQL or REST API
+
+### Example: Create Collection
+
+```graphql
+mutation {
+  ClassCreate(class: "Article") {
+    class
+  }
+}
+```
+
+### Example: Add Data
+
+```graphql
+mutation {
+  DataObject {
+    Create(
+      class: "Article"
+      object: {
+        title: "AI Guide"
+        content: "..."
+      }
+    ) {
+      id
+    }
+  }
+}
+```
+
+### Example: Semantic Search
+
+```graphql
+query {
+  Get {
+    Article(
+      nearText: {
+        concepts: ["machine learning"]
+      }
+      limit: 10
+    ) {
+      title
+      content
+      _additional {
+        distance
+      }
+    }
+  }
+}
+```
+
+## Performance Characteristics
+
+### Scalability
+
+- Billions of vectors support
+- Multi-tenancy for data isolation
+- Distributed deployment options
+- Linear scaling with data size
+
+### Latency
+
+- Sub-second semantic search
+- Optimized query execution
+- Vector caching mechanisms
+- Low-latency cloud deployments
+
+### Storage
+
+- Compressed vector storage
+- Metadata co-location with vectors
+- Efficient indexing structures
+- Backup and replication support
+
+## Development Resources
+
+### Documentation
+
+- API references (GraphQL and REST)
+- Integration guides
+- Deployment documentation
+- Best practices and patterns
+
+### Community
+
+- GitHub repository and discussions
+- Weaviate Academy for learning
+- Community forums and Slack
+- Regular webinars and workshops
+
+### Tools & Libraries
+
+- Python client (weaviate-client)
+- TypeScript/JavaScript client
+- Go and Java SDKs
+- Community-contributed libraries
+
+## Pricing & Deployment Models
+
+### Open Source
+
+- Self-hosted deployment
+- Full source code access
+- No licensing restrictions
+- Community support
+
+### Weaviate Cloud
+
+- Fully managed service
+- Pay-per-use pricing
+- Automatic scaling
+- Enterprise support available
+
+### Hybrid
+
+- Self-hosted + managed features
+- Custom infrastructure
+- Dedicated support
+- Enterprise SLAs
+
+## Comparison with Other Vector Databases
+
+### vs Pinecone
+
+- **Weaviate**: Self-hosted option, GraphQL API, more transparent
+- **Pinecone**: Fully managed, simpler pricing, larger scale claims
+
+### vs Milvus
+
+- **Weaviate**: GraphQL, built-in AI features, easier setup
+- **Milvus**: Pure Kubernetes focus, highly scalable
+
+### vs Qdrant
+
+- **Weaviate**: More AI-native, broader integrations
+- **Qdrant**: Simpler API, strong filtering
+
+### vs Chroma
+
+- **Weaviate**: Production-grade, scalable
+- **Chroma**: Lighter weight, good for dev/test
+
+## Advanced Topics
+
+### Multi-Tenancy
+
+- Isolate data per tenant
+- Shared infrastructure with data separation
+- Tenant-specific configurations
+- Billing per tenant
+
+### Reranking
+
+- Semantic reranking of results
+- Combine with hybrid search
+- Improve result quality
+- Powered by reranking models
+
+### Named Entity Recognition
+
+- Extract entities from text
+- Semantic entity tagging
+- Knowledge graph integration
+- Improved context understanding
+
+### BYOC (Bring Your Own Container)
+
+- Deploy in customer's infrastructure
+- Full control and customization
+- Enhanced security and compliance
+- Dedicated support options
+
+## Learning Resources
+
+### Getting Started
+
+- Quick start guides
+- Interactive tutorials
+- Sample datasets
+- Code examples
+
+### Best Practices
+
+- Schema design patterns
+- Query optimization
+- Embedding model selection
+- Performance tuning
+
+### Advanced Topics
+
+- Custom modules development
+- Multi-tenancy patterns
+- Disaster recovery
+- Production deployment
+
+## Support & Community
+
+- **GitHub**: Source code and issue tracking
+- **Slack**: Real-time community chat
+- **Forum**: Discussion and Q&A
+- **Academy**: Video courses and tutorials
+- **Email Support**: Commercial support options
+- **SLA**: Enterprise agreements available
+
+## Resources
+
+- **Official Website**: https://weaviate.io/
+- **Documentation**: https://docs.weaviate.io/
+- **GitHub**: https://github.com/weaviate/weaviate
+- **Academy**: https://academy.weaviate.io/
+- **Community**: https://slack.weaviate.io/
+
+---
+
+**Navigation**: [Documentation Index](index.md) | [Source](../llms-full.txt)

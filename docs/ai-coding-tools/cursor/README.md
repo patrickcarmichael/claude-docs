@@ -8,6 +8,16 @@ Official documentation for Cursor, scraped and formatted for LLM consumption.
 
 📑 **[Chunked Version](./chunked/index.md)** - Split into 45 manageable chunks (~250 KB each) with navigation
 
+✨ **[Formatted Multi-Language Documentation](./formatted/index.md)** - Fully formatted markdown in **10 languages**:
+  - Individual section files with navigation (1,120 total sections)
+  - YAML frontmatter with language metadata
+  - Organized by language and category (17 categories per language)
+  - Languages: English, German, Spanish, French, Indonesian, Japanese, Korean, Russian, Turkish, Chinese
+  - Quick links:
+    - [English](./formatted/en/index.md) | [German](./formatted/de/index.md) | [Spanish](./formatted/es/index.md) | [French](./formatted/fr/index.md)
+    - [Indonesian](./formatted/id/index.md) | [Japanese](./formatted/ja/index.md) | [Korean](./formatted/ko/index.md)
+    - [Russian](./formatted/ru/index.md) | [Turkish](./formatted/tr/index.md) | [Chinese](./formatted/zh/index.md)
+
 ## About
 
 This documentation is scraped from the official Cursor documentation and formatted for optimal LLM consumption. The chunked version is ideal for:
